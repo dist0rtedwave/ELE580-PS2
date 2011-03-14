@@ -37,7 +37,7 @@ public class driver {
 		
 		
 		Visitor vis0 = extracted(topLevelExpr);
-		vis0.visit(topLevelExpr, true);
+		vis0.visit(topLevelExpr);
 		System.out.println("\n");
 
 	}
