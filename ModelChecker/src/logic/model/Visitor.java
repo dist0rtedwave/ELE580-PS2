@@ -9,60 +9,46 @@ public class Visitor<G> {
 	  this.g = g;
 	}
 	
-	public void visit(Expression o, Boolean PrintExpr){
+	public void visit(Expression o){
 		switch (o.getDescriptor()){
 		case Variable.DESCRIPTOR:
-			visitVariable((Variable)o, PrintExpr);
+			visitVariable((Variable)o);
 			break;
 		case BinaryOp.DESCRIPTOR:
-			visitBinaryOp((BinaryOp)o, PrintExpr);
+			visitBinaryOp((BinaryOp)o);
 			break;
 		case UnaryOp.DESCRIPTOR:
-			visitUnaryOp((UnaryOp)o, PrintExpr);
+			visitUnaryOp((UnaryOp)o);
 			break;
 		}
 	}
 
-	protected void visitExpression(Expression o, Boolean PrintExpr){
+	protected void visitExpression(Expression o){
 		assert o!=null;
 	}
 	
-	protected void visitVariable(Variable o, Boolean PrintExpr) {
+	protected void visitVariable(Variable o) {
 		assert o != null;
-		if(PrintExpr)
-			System.out.print(o.getTheName());
-		visitExpression(o, PrintExpr);
+		visitExpression(o);
 	}
 	
-	protected void visitBinaryOp(BinaryOp o, Boolean PrintExpr) {
+	protected void visitBinaryOp(BinaryOp o) {
 		assert o != null;
-		if(PrintExpr)
-			System.out.print(" (");
 		if(o.theLHS!=null){
-			visit(o.theLHS, PrintExpr);
-		}
-		if(PrintExpr)
-		{
-			System.out.print(") ");
-			System.out.print(o.getTheBinaryOperator());
-			System.out.print(" (");
+			visit(o.theLHS);
 		}
 		if(o.getTheRHS()!=null){
-			visit(o.theRHS, PrintExpr);
+			visit(o.theRHS);
 		}
-		if(PrintExpr)
-			System.out.print(") ");
-		visitExpression(o, PrintExpr);
+		visitExpression(o);
 	}
 	
-	protected void visitUnaryOp(UnaryOp o, Boolean PrintExpr){
+	protected void visitUnaryOp(UnaryOp o){
 		assert o!=null;
-		if(PrintExpr)
-			System.out.print(o.getTheOperator());
 		if(o.theExpression!=null){
-			visit(o.theExpression, PrintExpr);
+			visit(o.theExpression);
 		}
-		visitExpression(o, PrintExpr);
+		visitExpression(o);
 	}
 
 }
