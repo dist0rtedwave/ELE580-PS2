@@ -10,6 +10,8 @@ public class Visitor<G> {
 	}
 	
 	public void visit(Expression o){
+		if(o == null)
+			return;
 		switch (o.getDescriptor()){
 		case Variable.DESCRIPTOR:
 			visitVariable((Variable)o);

@@ -1,6 +1,7 @@
 
 package logic.test.examples;
 
+import logic.printer.test.PrintTest;
 import logic.model.BinaryOp;
 import logic.model.BinaryOperator;
 import logic.model.Expression;
@@ -41,4 +42,86 @@ public class Examples {
 		
 		return topLevelExpr;
 	}
+	
+	// a <=> (b/\c)
+	public static Expression getExample2(){
+		Variable varA = new Variable();
+		varA.setTheName("a");
+		Variable varB = new Variable();
+		varB.setTheName("b");
+		Variable varC = new Variable();
+		varC.setTheName("c");
+		
+		BinaryOp bop1 = new BinaryOp();
+		bop1.setTheLHS(varB);
+		bop1.setTheRHS(varC);
+		bop1.setTheBinaryOperator(BinaryOperator.AND);
+		
+		BinaryOp bop2 = new BinaryOp();
+		bop2.setTheLHS(varA);
+		bop2.setTheRHS(bop1);	
+		bop2.setTheBinaryOperator(BinaryOperator.EQUIV);
+		
+		
+		return bop2;
+	}
+	
+	// a <=> (b\/c)
+	public static Expression getExample3(){
+		Variable varA = new Variable();
+		varA.setTheName("a");
+		Variable varB = new Variable();
+		varB.setTheName("b");
+		Variable varC = new Variable();
+		varC.setTheName("c");
+		
+		BinaryOp bop1 = new BinaryOp();
+		bop1.setTheLHS(varB);
+		bop1.setTheRHS(varC);
+		bop1.setTheBinaryOperator(BinaryOperator.OR);
+		
+		BinaryOp bop2 = new BinaryOp();
+		bop2.setTheLHS(varA);
+		bop2.setTheRHS(bop1);	
+		bop2.setTheBinaryOperator(BinaryOperator.EQUIV);
+		
+		
+		return bop2;
+	}
+	
+	// a <=> (notB)
+	public static Expression getExample4(){
+		Variable varA = new Variable();
+		varA.setTheName("a");
+		Variable varB = new Variable();
+		varB.setTheName("b");
+		
+		BinaryOp bop1 = new BinaryOp();
+		bop1.setTheLHS(varA);
+		
+		UnaryOp uop1 = new UnaryOp();
+		uop1.setTheExpression(varB);
+		uop1.setTheOperator(UnaryOperator.NOT);
+		
+		bop1.setTheRHS(uop1);
+		bop1.setTheBinaryOperator(BinaryOperator.EQUIV);
+		return bop1;
+	}
+	
+	// a <=> (B)
+	public static Expression getExample5(){
+		Variable varA = new Variable();
+		varA.setTheName("a");
+		Variable varB = new Variable();
+		varB.setTheName("b");
+		
+		BinaryOp bop1 = new BinaryOp();
+		bop1.setTheLHS(varA);
+		bop1.setTheRHS(varB);
+		bop1.setTheBinaryOperator(BinaryOperator.EQUIV);
+		
+		return bop1;
+	}
+	
+	
 }

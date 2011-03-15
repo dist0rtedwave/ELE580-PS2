@@ -1,5 +1,8 @@
 package logic.model;
 
+import logic.printer.PrintVisitor;
+import logic.test.examples.Examples;
+
 public class UnaryOp extends Expression {
 	
 	protected Expression theExpression;
@@ -18,6 +21,7 @@ public class UnaryOp extends Expression {
 	}
 
 	public void setTheExpression(Expression theExpression) {
+		//TOOD: not not var -> just the var
 		this.theExpression = theExpression;
 	}
 	

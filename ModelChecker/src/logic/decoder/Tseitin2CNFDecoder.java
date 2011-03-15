@@ -7,6 +7,8 @@ import logic.model.UnaryOp;
 import logic.model.UnaryOperator;
 import logic.model.Variable;
 import logic.model.Visitor;
+import logic.printer.PrintVisitor;
+import logic.test.examples.Examples;
 
 public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
 
@@ -15,28 +17,14 @@ public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
 		// TODO Auto-generated constructor stub
 	}
 
-	public void visit(Expression o){
-		if(o == null)
-			return;
-		switch (o.getDescriptor()){
-		case Variable.DESCRIPTOR:
-			visitVariable((Variable)o);
-			break;
-		case BinaryOp.DESCRIPTOR:
-			visitBinaryOp((BinaryOp)o);
-			break;
-		case UnaryOp.DESCRIPTOR:
-			visitUnaryOp((UnaryOp)o);
-			break;
-		}
-	}
+
 
 	protected void visitExpression(Expression o){
 		assert o!=null;
 	}
 	
 	protected void visitVariable(Variable o) {
-		assert o != null;
+		assert o != null;	
 		visitExpression(o);
 	}
 	
@@ -59,12 +47,12 @@ public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
 		Y.setTheExpression(notY);
 		
 		ret_LHS.setTheLHS(notX);
-		ret_LHS.setTheLHS(notY);
+		ret_LHS.setTheRHS(notY);
 		//(NOT x \/ NOT y)
 		ret_LHS.setTheBinaryOperator(BinaryOperator.OR);
 		
 		ret_RHS.setTheLHS(Y);
-		ret_RHS.setTheLHS(X);
+		ret_RHS.setTheRHS(X);
 		//( x \/  y)
 		ret_RHS.setTheBinaryOperator(BinaryOperator.OR);
 		
@@ -186,15 +174,15 @@ public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
 		
 		UnaryOp notY = new UnaryOp();  	//notY
 		notY.setTheOperator(UnaryOperator.NOT);
-		notY.setTheExpression(notY);
+		notY.setTheExpression(Y);
 		
 		//(y \/ notX)
 		ret_LHS.setTheLHS(Y);
-		ret_LHS.setTheLHS(notX);
+		ret_LHS.setTheRHS(notX);
 				
 		//( x \/  notY)
 		ret_RHS.setTheLHS(notY);
-		ret_RHS.setTheLHS(X);
+		ret_RHS.setTheRHS(X);
 			
 		//( x \/  notY) /\ (y \/ notX)
 		ret_Total.setTheLHS(ret_LHS);
@@ -222,14 +210,30 @@ public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
 				retVal = UnaryTseitin(o.getTheLHS(), (UnaryOp)rhs);
 				break;
 			}
+			
+			//append new expression to g
 			BinaryOp newExpr = new BinaryOp();
-			newExpr.setTheLHS(g);
-			newExpr.setTheRHS(retVal);
-			newExpr.setTheBinaryOperator(BinaryOperator.AND);
-			g = newExpr;
+			if(g != null)		//preseve the left side
+			{
+				System.out.println("preserving existing tseitin equivlances");
+				newExpr.setTheLHS(g);
+				newExpr.setTheRHS(retVal);
+				newExpr.setTheBinaryOperator(BinaryOperator.AND);
+				g = newExpr;
+				
+			}
+			else
+			{
+				g = (BinaryOp)retVal;
+			}
+			
 		}
-		visit(o.getTheLHS());
-		visit(o.getTheRHS());
+		
+		if(o.getTheRHS()!=null)
+			visit(o.getTheRHS());
+		if(o.getTheLHS() != null)
+			visit(o.getTheLHS());
+		
 		visitExpression(o);
 	}
 	
