@@ -32,7 +32,7 @@ public class PrintTest {
 		StringBuilder b = new StringBuilder();
 		PrintVisitor v = new PrintVisitor(b);
 		
-		BinaryOp tseitinExpr = null; 	// will contain the tseitin expression after decode is runs
+		BinaryOp tseitinExpr = new BinaryOp(); 	// will contain the tseitin expression after decode is runs
 		Tseitin2CNFDecoder dc = new Tseitin2CNFDecoder(tseitinExpr);
 		dc.visit(Examples.getExample2());
 		
@@ -45,7 +45,7 @@ public class PrintTest {
 		StringBuilder b = new StringBuilder();
 		PrintVisitor v = new PrintVisitor(b);
 		
-		BinaryOp tseitinExpr = null; 	// will contain the tseitin expression after decode is runs
+		BinaryOp tseitinExpr =  new BinaryOp(); 	// will contain the tseitin expression after decode is runs
 		Tseitin2CNFDecoder dc = new Tseitin2CNFDecoder(tseitinExpr);
 		dc.visit(Examples.getExample3());
 		
@@ -55,15 +55,18 @@ public class PrintTest {
 	
 	@Test // tests for negation decoding i.e. a<=>(notB)
 	public  void testTseitinNegation(){
+		
 		StringBuilder b = new StringBuilder();
 		PrintVisitor v = new PrintVisitor(b);
 		
-		BinaryOp tseitinExpr = null; 	// will contain the tseitin expression after decode is runs
+		BinaryOp tseitinExpr =  new BinaryOp(); 	// will contain the tseitin expression after decode is runs
 		Tseitin2CNFDecoder dc = new Tseitin2CNFDecoder(tseitinExpr);
 		dc.visit(Examples.getExample4());
 		
-		v.visit(tseitinExpr);
+		v.visit(tseitinExpr );
+		
 		System.out.println(b.toString());
+		
 	}
 	
 	@Test // tests for regular equiv decoding i.e. a<=>b)
@@ -71,7 +74,7 @@ public class PrintTest {
 		StringBuilder b = new StringBuilder();
 		PrintVisitor v = new PrintVisitor(b);
 		
-		BinaryOp tseitinExpr = null; 	// will contain the tseitin expression after decode is runs
+		BinaryOp tseitinExpr =  new BinaryOp(); 	// will contain the tseitin expression after decode is runs
 		Tseitin2CNFDecoder dc = new Tseitin2CNFDecoder(tseitinExpr);
 		dc.visit(Examples.getExample5());
 		

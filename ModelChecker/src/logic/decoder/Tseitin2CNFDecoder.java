@@ -32,8 +32,9 @@ public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
 	
 	
 	//x <=> notY
-	Expression UnaryTseitin(Expression X, UnaryOp notY)
+	BinaryOp UnaryTseitin(Expression X, UnaryOp notY)
 	{
+		
 		BinaryOp ret_Total = new BinaryOp();
 		BinaryOp ret_LHS = new BinaryOp();
 		BinaryOp ret_RHS = new BinaryOp();
@@ -65,7 +66,7 @@ public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
 	}
 	
 	// x<=>RHS
-	Expression BinaryTseitin(Expression X, BinaryOp RHS)
+	BinaryOp BinaryTseitin(Expression X, BinaryOp RHS)
 	{
 		Expression Y = RHS.getTheLHS();
 		Expression Z = RHS.getTheRHS();
@@ -157,7 +158,7 @@ public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
 	}
 	
 	// x <==> y
-	Expression VariableTseitin(Expression X, Variable Y)
+	BinaryOp VariableTseitin(Expression X, Variable Y)
 	{
 		BinaryOp ret_Total = new BinaryOp();
 		ret_Total.setTheBinaryOperator(BinaryOperator.AND);
@@ -198,7 +199,7 @@ public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
 		if(o.getTheBinaryOperator().compareTo(BinaryOperator.EQUIV) == 0)
 		{
 			Expression rhs = o.getTheRHS();
-			Expression retVal = null;
+			BinaryOp retVal = null;
 			switch (rhs.getDescriptor()){
 			case Variable.DESCRIPTOR:
 				retVal = VariableTseitin(o.getTheLHS(), (Variable)rhs);
@@ -212,20 +213,28 @@ public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
 			}
 			
 			//append new expression to g
-			BinaryOp newExpr = new BinaryOp();
-			if(g != null)		//preseve the left side
+			
+			if(g.getTheBinaryOperator() != null)
 			{
-				System.out.println("preserving existing tseitin equivlances");
-				newExpr.setTheLHS(g);
-				newExpr.setTheRHS(retVal);
-				newExpr.setTheBinaryOperator(BinaryOperator.AND);
-				g = newExpr;
+				BinaryOp newExpr = new BinaryOp();
+				newExpr.setTheLHS(g.getTheLHS());
+				newExpr.setTheRHS(g.getTheRHS());
+				newExpr.setTheBinaryOperator(g.getTheBinaryOperator());
 				
+				g.setTheLHS(newExpr);
+				g.setTheBinaryOperator(BinaryOperator.AND);
+				g.setTheRHS(retVal);
 			}
 			else
 			{
-				g = (BinaryOp)retVal;
+				g.setTheBinaryOperator(retVal.getTheBinaryOperator());
+				g.setTheLHS(retVal.getTheLHS());
+				g.setTheRHS(retVal.getTheRHS());
 			}
+			
+				
+			
+			
 			
 		}
 		
@@ -239,6 +248,7 @@ public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
 	
 	protected void visitUnaryOp(UnaryOp o){
 		assert o!=null;
+		
 		visitExpression(o);
 	}
 }
