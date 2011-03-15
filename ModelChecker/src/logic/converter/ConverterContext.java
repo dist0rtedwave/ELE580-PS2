@@ -8,6 +8,7 @@ public class ConverterContext {
 	private BinaryOp theExpression;
     private int freshNumber =0;
     private boolean makingEquivalences=false;
+    private boolean isLiteral=false;
     
 	public boolean isMakingEquivalences() {
 		return makingEquivalences;
@@ -39,6 +40,14 @@ public class ConverterContext {
 
 	public int getFreshNumber() {
 		return freshNumber;
+	}
+
+	public void setLiteral(boolean isLiteral) {
+		this.isLiteral = isLiteral;
+	}
+
+	public boolean isLiteral() {
+		return isLiteral;
 	}
 	
 }

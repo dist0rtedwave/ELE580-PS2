@@ -17,7 +17,12 @@ public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
 		// TODO Auto-generated constructor stub
 	}
 
-
+	public static Expression decode(Expression o){
+		BinaryOp result= new BinaryOp();
+		Tseitin2CNFDecoder dec = new Tseitin2CNFDecoder(result);
+		dec.visit(o);
+		return result;
+	}
 
 	protected void visitExpression(Expression o){
 		assert o!=null;
@@ -192,7 +197,6 @@ public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
 		return ret_Total;
 		
 	}
-	
 	
 	protected void visitBinaryOp(BinaryOp o) {
 		assert o != null;
