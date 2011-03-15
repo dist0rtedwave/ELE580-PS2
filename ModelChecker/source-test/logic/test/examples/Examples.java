@@ -1,7 +1,6 @@
 
 package logic.test.examples;
 
-import logic.printer.test.PrintTest;
 import logic.model.BinaryOp;
 import logic.model.BinaryOperator;
 import logic.model.Expression;
