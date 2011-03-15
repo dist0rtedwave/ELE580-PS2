@@ -28,5 +28,11 @@ public class PrintVisitor extends Visitor<StringBuilder> {
 		visit(o.getTheExpression());
 	}
 
+	public static String expressionToString(Expression e){
+		StringBuilder b = new StringBuilder();
+		PrintVisitor v = new PrintVisitor(b);
+		v.visit(e);
+		return b.toString();
+	}
 
 }
