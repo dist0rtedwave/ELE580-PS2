@@ -66,7 +66,7 @@ public class Examples {
 	}
 	
 	// a <=> (b\/c)
-	public static Expression getExample3(){
+	public static BinaryOp getExample3(){
 		Variable varA = new Variable();
 		varA.setTheName("a");
 		Variable varB = new Variable();
@@ -122,5 +122,21 @@ public class Examples {
 		return bop1;
 	}
 	
+
+	// a => (b)
+	public static BinaryOp getExample6(){
+		Variable varA = new Variable();
+		varA.setTheName("a");
+		Variable varB = new Variable();
+		varB.setTheName("b");
+		
+		BinaryOp bop1 = new BinaryOp();
+		bop1.setTheLHS(varA);
+		bop1.setTheBinaryOperator(BinaryOperator.IMP);
+		bop1.setTheRHS(varB);
+			
+		
+		return bop1;
+	}
 	
 }

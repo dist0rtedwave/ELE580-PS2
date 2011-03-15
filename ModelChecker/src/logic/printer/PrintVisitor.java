@@ -24,8 +24,9 @@ public class PrintVisitor extends Visitor<StringBuilder> {
 	
 	protected void visitUnaryOp(UnaryOp o){
 		g.append(o.getTheOperator());
-		g.append(" ");
+		g.append(" (");
 		visit(o.getTheExpression());
+		g.append(") ");
 	}
 
 	public static String expressionToString(Expression e){
