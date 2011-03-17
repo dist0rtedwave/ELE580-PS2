@@ -3,6 +3,7 @@ package logic.test.examples;
 
 import logic.model.BinaryOp;
 import logic.model.BinaryOperator;
+import logic.model.EF;
 import logic.model.Expression;
 import logic.model.UnaryOp;
 import logic.model.UnaryOperator;
@@ -139,4 +140,43 @@ public class Examples {
 		return bop1;
 	}
 	
+	public static Expression getNotExample0(){
+		return EF.createVariable("a");
+	}
+	
+	public static Expression getNotExample1(){
+		return EF.createNot("a");
+	}
+	
+	public static Expression getNotExample2(){
+		return EF.createNot(EF.createNot("a"));
+	}
+	
+	public static Expression getNotExample3(){
+		return EF.createAnd("a", "b");
+	}
+	
+	public static Expression getNotExample4(){
+		return EF.createNot(getNotExample3());
+	}
+	
+	public static Expression getNotExample5(){
+		return EF.createNot(EF.createOr("a", "b"));
+	}
+	
+	public static Expression getNotExample6(){
+		return EF.createNot(EF.createOr(EF.createNot("a"), "b"));
+	}
+	
+	public static Expression getNotExample7(){
+		return EF.createNot(EF.createOr(EF.createNot(EF.createNot("a")), "b"));
+	}
+	
+	public static Expression getNotExample8(){
+		return EF.createNot(EF.createOr(EF.createNot(EF.createNot("a")), EF.createNot("b")));
+	}
+	
+	public static Expression getNotExample9(){
+		return EF.createNot(EF.createOr(EF.createNot(EF.createNot("a")), getNotExample7()));
+	}
 }
