@@ -40,9 +40,10 @@ public class MiniSat {
 		}
    }
    
-   public static int exec() throws IOException
+   public static int exec(Expression e) throws IOException
    {
-	   String cmd = "../minisat";
+	   MiniSat.writeCNF(e);
+	   String cmd = "../minisat /tmp/input.cnf";
        Runtime runtime = Runtime.getRuntime();
        Process process = runtime.exec(cmd);
        InputStream is = process.getInputStream();

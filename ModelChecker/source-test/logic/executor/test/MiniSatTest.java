@@ -12,6 +12,6 @@ public class MiniSatTest {
 	
 	@Test
 	public  void testPrintExample1() throws IOException{
-		MiniSat.writeCNF(Examples.getExample1());
+		MiniSat.exec(Examples.getExample1());
 	}
 }
