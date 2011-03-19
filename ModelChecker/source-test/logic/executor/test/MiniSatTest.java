@@ -12,7 +12,6 @@ public class MiniSatTest {
 	
 	@Test
 	public  void testPrintExample1() throws IOException{
-		MiniSat.exec();
-		//System.out.println(DimacsPrinter.expressionToString(Examples.getExample1()));
+		MiniSat.writeCNF(Examples.getExample1());
 	}
 }
