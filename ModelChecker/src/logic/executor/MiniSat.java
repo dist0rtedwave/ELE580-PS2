@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 
 import logic.converter.Converter;
 import logic.converter.ImpRemover;
@@ -15,13 +14,12 @@ import logic.decoder.Tseitin2CNFDecoder;
 import logic.model.BinaryOp;
 import logic.model.Expression;
 import logic.printer.DimacsPrinter;
-import logic.test.examples.Examples;
 
 public class MiniSat {
 
    public static Expression convertExpression(Expression e)
    {
-	   e = ImpRemover.convert((BinaryOp) e);
+	   e = ImpRemover.removeImps((BinaryOp) e);
 	   e = NotDistributor.distributeNots(e);
 	   e = Converter.convert(e);
 	   e = Tseitin2CNFDecoder.decode(e);

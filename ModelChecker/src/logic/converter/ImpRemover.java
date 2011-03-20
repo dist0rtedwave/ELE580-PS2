@@ -1,39 +1,40 @@
 package logic.converter;
 
-/* will take an expression and create an expression with equivalences that the tseitin2cnf will handle*/
+import logic.model.BinaryOp;
+import logic.model.BinaryOperator;
+import logic.model.Expression;
+import logic.model.UnaryOp;
+import logic.model.UnaryOperator;
+import logic.model.Variable;
+import logic.model.Visitor;
 
-import logic.model.*;
+public class ImpRemover extends Visitor<NotContext> {
 
-public class ImpRemover extends Visitor<BinaryOp> {
-
-	public static Expression convert(BinaryOp e){
-		BinaryOp removed = new BinaryOp();
-		removed.setTheLHS(e.getTheLHS());
-		removed.setTheRHS(e.getTheRHS());
-		removed.setTheBinaryOperator(e.getTheBinaryOperator());
-		ImpRemover remover = new ImpRemover(removed);
-		remover.visit(e);
-		return removed;
+	public static Expression removeImps(Expression e){
+		NotContext context = new NotContext();
+		ImpRemover dist = new ImpRemover(context);
+		dist.visit(e);
+		return context.getChild();
 	}
 	
-	public ImpRemover(BinaryOp g) {
+	public ImpRemover(NotContext g) {
 		super(g);
 	}
 	
 	@Override
 	protected void visitUnaryOp(UnaryOp o) {
 		visit(o.getTheExpression());
+		this.g.setChild(o);
 	}
 	
 	@Override
 	protected void visitVariable(Variable o) {
+		this.g.setChild(o);
 		return;
 	}
 	
-	//assumes only and and or
+	@Override
 	protected void visitBinaryOp(BinaryOp o) {
-		
-		
 		if(o.getTheBinaryOperator().compareTo(BinaryOperator.IMP) == 0)  // is IMP
 		{
 			UnaryOp notLHS = new UnaryOp();
@@ -71,9 +72,11 @@ public class ImpRemover extends Visitor<BinaryOp> {
 			
 		}
 		visit(o.getTheLHS());
+		o.setTheLHS(this.g.getChild());
 		visit(o.getTheRHS());
+		o.setTheRHS(this.g.getChild());
+		
+		this.g.setChild(o);
 	}
-	
-
 
 }

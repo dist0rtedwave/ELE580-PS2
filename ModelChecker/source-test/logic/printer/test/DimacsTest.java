@@ -1,14 +1,12 @@
 package logic.printer.test;
 
-import org.junit.Test;
-
 import logic.converter.ImpRemover;
 import logic.decoder.Tseitin2CNFDecoder;
 import logic.model.BinaryOp;
-import logic.model.Expression;
-import logic.model.Visitor;
 import logic.printer.DimacsPrinter;
 import logic.test.examples.Examples;
+
+import org.junit.Test;
 
 public class DimacsTest {
 	
@@ -57,14 +55,14 @@ public class DimacsTest {
 	@Test // tests for regular equiv decoding i.e. a<=>b)
 	public  void testEquivRemover1(){
 		BinaryOp op = Examples.getExample3(); 
-		ImpRemover.convert(op);
+		ImpRemover.removeImps(op);
 		System.out.println(DimacsPrinter.expressionToString(op));
 	}
 	
 	@Test // tests for regular equiv decoding i.e. a=>b)
 	public  void testImpRemover1(){
 		BinaryOp op = Examples.getExample6(); 
-		ImpRemover.convert(op);
+		ImpRemover.removeImps(op);
 		System.out.println(DimacsPrinter.expressionToString(op));
 	}
 	

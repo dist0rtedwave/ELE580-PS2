@@ -1,14 +1,11 @@
 package logic.printer.test;
 
-import org.junit.Test;
-
-import logic.converter.ImpRemover;
 import logic.decoder.Tseitin2CNFDecoder;
 import logic.model.BinaryOp;
-import logic.model.Expression;
-import logic.model.Visitor;
 import logic.printer.PrintVisitor;
 import logic.test.examples.Examples;
+
+import org.junit.Test;
 
 public class PrintTest {
 	
@@ -52,20 +49,6 @@ public class PrintTest {
 		Tseitin2CNFDecoder dc = new Tseitin2CNFDecoder(tseitinExpr);
 		dc.visit(Examples.getExample5());
 		System.out.println(PrintVisitor.expressionToString(tseitinExpr));
-	}
-	
-	@Test // tests for regular equiv decoding i.e. a<=>b)
-	public  void testEquivRemover1(){
-		BinaryOp op = Examples.getExample3(); 
-		ImpRemover.convert(op);
-		System.out.println(PrintVisitor.expressionToString(op));
-	}
-	
-	@Test // tests for regular equiv decoding i.e. a=>b)
-	public  void testImpRemover1(){
-		BinaryOp op = Examples.getExample6(); 
-		ImpRemover.convert(op);
-		System.out.println(PrintVisitor.expressionToString(op));
 	}
 	
 	
