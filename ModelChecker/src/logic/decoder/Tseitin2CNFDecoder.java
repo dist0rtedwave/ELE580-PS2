@@ -7,30 +7,29 @@ import logic.model.UnaryOp;
 import logic.model.UnaryOperator;
 import logic.model.Variable;
 import logic.model.Visitor;
-import logic.printer.PrintVisitor;
-import logic.test.examples.Examples;
 
-public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
+public class Tseitin2CNFDecoder extends Visitor<TseitinDecoderContext>{
 
-	public Tseitin2CNFDecoder(BinaryOp g) {
+	public Tseitin2CNFDecoder(TseitinDecoderContext g) {
 		super(g);
 		// TODO Auto-generated constructor stub
 	}
 
 	public static Expression decode(Expression o){
-		BinaryOp result= new BinaryOp();
-		Tseitin2CNFDecoder dec = new Tseitin2CNFDecoder(result);
-		dec.visit(o);
-		return result;
+		if(o.getDescriptor()==UnaryOp.DESCRIPTOR)
+			return o;
+		if(o.getDescriptor()==Variable.DESCRIPTOR)
+			return o;
+		TseitinDecoderContext context = new TseitinDecoderContext();
+		Tseitin2CNFDecoder dist = new Tseitin2CNFDecoder(context);
+		dist.visit(o);
+		return context.getChild();
 	}
 
-	protected void visitExpression(Expression o){
-		assert o!=null;
-	}
+
 	
 	protected void visitVariable(Variable o) {
-		assert o != null;	
-		visitExpression(o);
+		this.g.setChild(o);
 	}
 	
 	/*IMPORTANT: see slides for reasons why i assigned variables the way I did.*/
@@ -199,7 +198,9 @@ public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
 	}
 	
 	protected void visitBinaryOp(BinaryOp o) {
-		assert o != null;
+		
+		
+		
 		if(o.getTheBinaryOperator().compareTo(BinaryOperator.EQUIV) == 0)
 		{
 			Expression rhs = o.getTheRHS();
@@ -217,42 +218,28 @@ public class Tseitin2CNFDecoder extends Visitor<BinaryOp>{
 			}
 			
 			//append new expression to g
+
+	
 			
-			if(g.getTheBinaryOperator() != null)
-			{
-				BinaryOp newExpr = new BinaryOp();
-				newExpr.setTheLHS(g.getTheLHS());
-				newExpr.setTheRHS(g.getTheRHS());
-				newExpr.setTheBinaryOperator(g.getTheBinaryOperator());
-				
-				g.setTheLHS(newExpr);
-				g.setTheBinaryOperator(BinaryOperator.AND);
-				g.setTheRHS(retVal);
-			}
-			else
-			{
-				g.setTheBinaryOperator(retVal.getTheBinaryOperator());
-				g.setTheLHS(retVal.getTheLHS());
-				g.setTheRHS(retVal.getTheRHS());
-			}
+			o.setTheLHS(retVal.getTheLHS());
+			o.setTheBinaryOperator(retVal.getTheBinaryOperator());
+			o.setTheRHS(retVal.getTheRHS());
 			
-				
-			
-			
-			
+
 		}
+		visit(o.getTheLHS());
+		o.setTheLHS(this.g.getChild());
+		visit(o.getTheRHS());
+		o.setTheRHS(this.g.getChild());
+		this.g.setChild(o);	
+	
 		
-		if(o.getTheRHS()!=null)
-			visit(o.getTheRHS());
-		if(o.getTheLHS() != null)
-			visit(o.getTheLHS());
 		
-		visitExpression(o);
+		
 	}
 	
 	protected void visitUnaryOp(UnaryOp o){
-		assert o!=null;
-		
-		visitExpression(o);
+		//visit(o.getTheExpression());
+		this.g.setChild(o);
 	}
 }

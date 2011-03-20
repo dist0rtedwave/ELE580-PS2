@@ -140,6 +140,30 @@ public class Examples {
 		return bop1;
 	}
 	
+	
+	public static Expression getTotalExample0(){
+		return EF.createNot(EF.createImp(EF.createNot(EF.createOr("z", EF.createOr("a", "b"))), EF.createEquiv("c", "d")));
+	}
+	
+	public static Expression getTotalExample3(){
+		return EF.createNot(EF.createOr(EF.createAnd("a", "b"), EF.createAnd("c","d")));
+	}
+	
+	public static Expression getTotalExample4(){
+		return EF.createImp(EF.createOr(EF.createAnd("a", "b"), EF.createAnd("c","d")),EF.createNot("z"));
+	}
+	
+	
+	public static Expression getTotalExample2(){
+		return EF.createNot(EF.createEquiv("a", "b"));
+	}
+	
+	
+	public static Expression getTotalExample1(){
+		return EF.createImp("a", "b");
+	}
+	
+	
 	public static Expression getImpExample0()
 	{
 		return EF.createVariable("a");

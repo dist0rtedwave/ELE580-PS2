@@ -5,7 +5,7 @@ import logic.model.Expression;
 
 public class ConverterContext {
 	private boolean orSeen=false;
-	private BinaryOp theExpression;
+	private Expression theExpression;
     private int freshNumber =0;
     private boolean makingEquivalences=false;
     private boolean isLiteral=false;
@@ -26,11 +26,11 @@ public class ConverterContext {
 		return orSeen;
 	}
 
-	public void setTheExpression(BinaryOp theExpression) {
-		this.theExpression = theExpression;
+	public void setTheExpression(Expression e) {
+		this.theExpression = e;
 	}
 
-	public BinaryOp getTheExpression() {
+	public Expression getTheExpression() {
 		return theExpression;
 	}
 

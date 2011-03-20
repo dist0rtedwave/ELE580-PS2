@@ -14,15 +14,21 @@ import logic.decoder.Tseitin2CNFDecoder;
 import logic.model.BinaryOp;
 import logic.model.Expression;
 import logic.printer.DimacsPrinter;
+import logic.printer.PrintVisitor;
 
 public class MiniSat {
 
    public static Expression convertExpression(Expression e)
    {
-	   e = ImpRemover.removeImps((BinaryOp) e);
+	 //  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	   e = ImpRemover.removeImps(e);
+	 //  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   e = NotDistributor.distributeNots(e);
+	 //  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   e = Converter.convert(e);
+	 // System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   e = Tseitin2CNFDecoder.decode(e);
+	 //  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   return e;
    }
    

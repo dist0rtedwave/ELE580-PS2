@@ -8,7 +8,7 @@ public class Converter extends Visitor<ConverterContext> {
 
 	public static Expression convert(Expression e){
 		ConverterContext context = new ConverterContext();
-		context.setTheExpression((BinaryOp) e);
+		context.setTheExpression(e);
 		Converter con = new Converter(context);
 		con.visit(e);
 		return context.getTheExpression();
