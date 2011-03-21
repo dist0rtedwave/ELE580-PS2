@@ -26,7 +26,6 @@ public class NotDistributor extends Visitor<NotContext> {
 		if(o.getTheOperator()==UnaryOperator.NOT){
 			this.g.setNegating(!this.g.isNegating());
 			visit(o.getTheExpression());
-			o.setTheExpression(this.g.getChild());
 			this.g.setNegating(!this.g.isNegating());
 		}	
 	}

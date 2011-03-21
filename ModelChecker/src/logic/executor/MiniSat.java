@@ -28,9 +28,9 @@ public class MiniSat {
 	   e = Converter.convert(e);
 	 // System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   e = Tseitin2CNFDecoder.decode(e);
-	   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	   System.out.println("Before not dist " + PrintVisitor.expressionToString(e) +"\n\n");
 	   e = NotDistributor.distributeNots(e);
-	   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	   System.out.println("After not dist " + PrintVisitor.expressionToString(e) +"\n\n");
 	   return e;
    }
    

@@ -3,6 +3,7 @@ package logic.converter.test;
 import org.junit.Test;
 
 import logic.converter.NotDistributor;
+import logic.executor.MiniSat;
 import logic.model.Expression;
 import logic.printer.PrintVisitor;
 import logic.test.examples.Examples;
@@ -68,6 +69,11 @@ public class NotDistributionTest{
 	@Test
 	public void test10(){
 		testNot(Examples.getNotExample10());
+	}
+	
+	@Test
+	public void test11(){
+		testNot(MiniSat.convertExpression(Examples.getExample1()));
 	}
 	
 }
