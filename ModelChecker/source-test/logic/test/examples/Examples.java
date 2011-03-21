@@ -232,4 +232,8 @@ public class Examples {
 	public static Expression getNotExample9(){
 		return EF.createNot(EF.createOr(EF.createNot(EF.createNot("a")), getNotExample7()));
 	}
+	
+	public static Expression getNotExample10(){
+		return EF.createAnd("z",EF.createNot(EF.createNot("a")));
+	}
 }

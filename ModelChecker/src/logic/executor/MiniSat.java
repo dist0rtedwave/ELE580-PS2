@@ -28,7 +28,9 @@ public class MiniSat {
 	   e = Converter.convert(e);
 	 // System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   e = Tseitin2CNFDecoder.decode(e);
-	 //  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	   e = NotDistributor.distributeNots(e);
+	   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   return e;
    }
    
@@ -48,7 +50,7 @@ public class MiniSat {
    {
 	   MiniSat.writeCNF(e);
        Runtime runtime = Runtime.getRuntime();
-	   String cmd = "/home/zouf/Class/580/ps2/minisat/core/minisat /tmp/input-negrem.cnf";
+	   String cmd = "../minisat/minisat /tmp/input-negrem.cnf";
        String removeDoubles = "/home/zouf/Class/580/ps2/removeDoubles";
        runtime.exec(removeDoubles);
        Process process = runtime.exec(cmd);
