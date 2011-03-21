@@ -47,8 +47,10 @@ public class MiniSat {
    public static int exec(Expression e) throws IOException
    {
 	   MiniSat.writeCNF(e);
-	   String cmd = "../minisat /tmp/input.cnf";
        Runtime runtime = Runtime.getRuntime();
+	   String cmd = "/home/zouf/Class/580/ps2/minisat/core/minisat /tmp/input-negrem.cnf";
+       String removeDoubles = "/home/zouf/Class/580/ps2/removeDoubles";
+       runtime.exec(removeDoubles);
        Process process = runtime.exec(cmd);
        InputStream is = process.getInputStream();
        InputStreamReader isr = new InputStreamReader(is);
