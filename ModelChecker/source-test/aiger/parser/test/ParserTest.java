@@ -28,7 +28,7 @@ public class ParserTest {
 	
 	@Test
 	public void testNotLiteral(){
-		File f = new File(examplesDir + simpleExamples);
+		File f = new File(examplesDir + simpleExamples + File.separator + "notLiteral.aig");
 		parseFile(f.getAbsolutePath());
 	}
 	
