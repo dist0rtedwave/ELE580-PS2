@@ -12,6 +12,7 @@ import aiger.model.AigerFile;
 import aiger.model.AndGate;
 import aiger.model.Expression;
 import aiger.model.Latch;
+import aiger.model.Not;
 import aiger.model.Variable;
 
 public class AigerParser {
@@ -79,9 +80,54 @@ public class AigerParser {
 		for(int c=0; c<a; c++){
 			readAndGate(lineScanner.nextLine());
 		}
-		return null;
+		
+		Set<Expression> outputs = link();
+		
+		return new AigerFile(outputs, symbols);
 	}
-
+	
+	private Expression getSymbol(int n){
+		if(n%2==0){
+			return symbols.get(n/2);
+		}
+		else{
+			return new Not(symbols.get((n-1)/2));
+		}
+	}
+	
+	private void resolveAnds(){
+		for(Integer i : unresolvedAnds.keySet()){
+			List<Integer> l = unresolvedAnds.get(i);
+			int lhs = l.get(0);
+			int rhs = l.get(1);
+			AndGate ag = (AndGate)symbols.get(String.valueOf(i));
+			ag.setTheLeftInput(getSymbol(lhs));
+			ag.setTheRightInput(getSymbol(rhs));
+		}
+	}
+	
+	private void resolveLatches(){
+		for(Integer i: unresolvedLatches.keySet()){
+			int expID = unresolvedLatches.get(i);
+			Latch l = (Latch)symbols.get(String.valueOf(i));
+			l.setTheNextState(getSymbol(expID));
+		}
+	}
+	
+	private Set<Expression> resolveOutputs(){
+		Set<Expression> ret = new HashSet<Expression>();
+		for(Integer i: unresolvedOutputs){
+			ret.add(getSymbol(i));
+		}
+		return ret;
+	}
+	
+	private Set<Expression> link(){
+			resolveAnds();
+			resolveLatches();
+			return resolveOutputs();
+	}
+	
 	private void readAndGate(String andGate) {
 		Scanner s = new Scanner(andGate);
 		int id = s.nextInt()/2;
