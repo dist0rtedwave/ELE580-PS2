@@ -63,6 +63,7 @@ public class AigerParser {
 	
 	public AigerFile parseFile(String file){
 		Scanner lineScanner = new Scanner(file);
+		lineScanner.nextLine();//get to the first line
 		readHeader(lineScanner.nextLine());
 		
 		for(int c=0; c<i; c++){
