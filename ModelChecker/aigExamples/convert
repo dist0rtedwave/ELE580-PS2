@@ -1,0 +1,8 @@
+#!/bin/bash
+AIGTOAIG=../../aiger-utilities/aigtoaig
+
+for file in benchmarks/*;
+do 
+  fn=`echo "$file" | grep  -o "[^/]*$"`
+  $AIGTOAIG $file converted/$fn.aag
+done
