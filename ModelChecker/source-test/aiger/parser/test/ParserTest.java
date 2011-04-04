@@ -1,4 +1,4 @@
-package aiger.parser.test;
+	package aiger.parser.test;
 
 import java.io.File;
 import java.io.IOException;
