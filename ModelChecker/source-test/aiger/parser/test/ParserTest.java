@@ -13,7 +13,7 @@ import util.Util;
 public class ParserTest {
 
 	private String examplesDir = "aigExamples";
-	private String simpleExamples = File.separator + "simpleExamples";
+	private String simpleExamples = examplesDir + File.separator + "simpleExamples";
 	
 	public AigerFile parseFile(String qualifiedFileName){
 		String s="";
@@ -28,8 +28,26 @@ public class ParserTest {
 	
 	@Test
 	public void testNotLiteral(){
-		File f = new File(examplesDir + simpleExamples + File.separator + "notLiteral.aig");
-		parseFile(f.getAbsolutePath());
+		File f = new File(simpleExamples + File.separator + "notLiteral.aig");
+		AigerFile ret = parseFile(f.getAbsolutePath());
+	}
+	
+	@Test
+	public void testBuffer(){
+		File f = new File(simpleExamples + File.separator + "buffer.aig");
+		AigerFile ret = parseFile(f.getAbsolutePath());
+	}
+	
+	@Test
+	public void testInverter(){
+		File f = new File(simpleExamples + File.separator + "inverter.aig");
+		AigerFile ret = parseFile(f.getAbsolutePath());
+	}
+	
+	@Test
+	public void testSimpleState(){
+		File f = new File(simpleExamples + File.separator + "simplestate.aig");
+		AigerFile ret = parseFile(f.getAbsolutePath());
 	}
 	
 }

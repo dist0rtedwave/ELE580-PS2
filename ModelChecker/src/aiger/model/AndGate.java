@@ -3,17 +3,22 @@ package aiger.model;
 public class AndGate extends Expression {
 	private Expression theLeftInput;
 	private Expression theRightInput;
-	private String theName;
+	private int theName;
 	
 	public AndGate(Expression theLeftInput, Expression theRightInput,
-			String theName) {
+			int theName) {
 		super();
 		this.theLeftInput = theLeftInput;
 		this.theRightInput = theRightInput;
 		this.theName = theName;
 	}
+	  public final int getDescriptor() {
+		  return DESCRIPTOR;
+	  }
+	  
+	public final static int DESCRIPTOR=1;
 	
-	public AndGate(String theName){
+	public AndGate(int theName){
 		this.theName=theName;
 	}
 	
@@ -29,10 +34,10 @@ public class AndGate extends Expression {
 	public void setTheRightInput(Expression theRightInput) {
 		this.theRightInput = theRightInput;
 	}
-	public String getTheName() {
+	public int getTheName() {
 		return theName;
 	}
-	public void setTheName(String theName) {
+	public void setTheName(int theName) {
 		this.theName = theName;
 	}
 	
