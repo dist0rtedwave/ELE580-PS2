@@ -7,24 +7,37 @@ import java.util.Set;
 
 public class AigerFile {
 	Set<Expression> theOutputs = new HashSet<Expression>();
-	Map<String, Expression> theSymbols = new HashMap<String, Expression>();
+	Map<Integer, Expression> theSymbols = new HashMap<Integer, Expression>();
+	Set<Latch> theLatches = new HashSet<Latch>();
+	
+	
+	public Set<Latch> getTheLatches() {
+		return theLatches;
+	}
+	public void setTheLatches(Set<Latch> theLatches) {
+		this.theLatches = theLatches;
+	}
 	public Set<Expression> getTheOutputs() {
 		return theOutputs;
 	}
 	public void setTheOutputs(Set<Expression> theOutputs) {
 		this.theOutputs = theOutputs;
 	}
-	public Map<String, Expression> getTheSymbols() {
+	public Map<Integer, Expression> getTheSymbols() {
 		return theSymbols;
 	}
-	public void setTheSymbols(Map<String, Expression> theSymbols) {
+	public void setTheSymbols(Map<Integer, Expression> theSymbols) {
 		this.theSymbols = theSymbols;
 	}
 	public AigerFile(Set<Expression> theOutputs,
-			Map<String, Expression> theSymbols) {
+			Map<Integer, Expression> theSymbols) {
 		super();
 		this.theOutputs = theOutputs;
 		this.theSymbols = theSymbols;
+	}
+	
+	public AigerFile(){
+		
 	}
 	
 		
