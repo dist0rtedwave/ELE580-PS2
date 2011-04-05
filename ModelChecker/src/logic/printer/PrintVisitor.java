@@ -29,11 +29,22 @@ public class PrintVisitor extends Visitor<StringBuilder> {
 		g.append(") ");
 	}
 
+	protected void visitFalseLiteral(FalseLiteral o){
+		g.append(" FALSE ");
+	}
+
+	protected void visitTrueLiteral(TrueLiteral o){
+		g.append(" TRUE ");
+	}
+
+	
 	public static String expressionToString(Expression e){
 		StringBuilder b = new StringBuilder();
 		PrintVisitor v = new PrintVisitor(b);
 		v.visit(e);
 		return b.toString();
 	}
+	
+	
 
 }

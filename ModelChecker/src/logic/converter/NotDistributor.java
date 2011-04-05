@@ -3,6 +3,8 @@ package logic.converter;
 import logic.model.BinaryOp;
 import logic.model.BinaryOperator;
 import logic.model.Expression;
+import logic.model.FalseLiteral;
+import logic.model.TrueLiteral;
 import logic.model.UnaryOp;
 import logic.model.UnaryOperator;
 import logic.model.Variable;
@@ -59,6 +61,26 @@ public class NotDistributor extends Visitor<NotContext> {
 		o.setTheRHS(this.g.getChild());
 		
 		this.g.setChild(o);
+	}
+	
+	@Override
+	protected void visitFalseLiteral(FalseLiteral o) {
+		if(this.g.isNegating()){
+			this.g.setChild(new TrueLiteral());
+		}
+		else{
+			this.g.setChild(o);
+		}
+	}
+	
+	@Override
+	protected void visitTrueLiteral(TrueLiteral o) {
+		if(this.g.isNegating()){
+			this.g.setChild(new FalseLiteral());
+		}
+		else{
+			this.g.setChild(o);
+		}
 	}
 
 }

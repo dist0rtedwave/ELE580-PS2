@@ -58,7 +58,7 @@ public class AigerParser {
 		int id = s.nextInt()/2;
 		int nextID = s.nextInt();
 		unresolvedLatches.put(id, nextID);
-		Latch l = new Latch(0);
+		Latch l = new Latch(new FalseLiteral());
 		symbols.put(id, l);
 		return l;
 	}

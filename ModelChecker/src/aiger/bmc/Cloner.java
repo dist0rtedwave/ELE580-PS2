@@ -21,34 +21,34 @@ public class Cloner extends Visitor<ClonerContext>{
 	@Override
 	protected void visitNot(Not o) {
 		Not result = new Not(null);
-//		g.getTheCopies().put(o, result);
-//		if(g.getTheCopies().containsKey(o.getTheExpression())){
-//			result.setTheExpression(g.getTheCopies().get(o.getTheExpression()));
-//		}else{
+		g.getTheCopies().put(o, result);
+		if(g.getTheCopies().containsKey(o.getTheExpression())){
+			result.setTheExpression(g.getTheCopies().get(o.getTheExpression()));
+		}else{
 			visit(o.getTheExpression());
 			result.setTheExpression(g.getResult());
-//		}
+		}
 		g.setResult(result);
 	}
 	
 	@Override
 	protected void visitAndGate(AndGate o) {
 		AndGate result = new AndGate(o.getTheName());
-//		g.getTheCopies().put(o, result);
-//		if(g.getTheCopies().containsKey(o.getTheLeftInput())){
-//			result.setTheLeftInput(this.g.getTheCopies().get(o.getTheLeftInput()));
-//		}
-//		else{
+		g.getTheCopies().put(o, result);
+		if(g.getTheCopies().containsKey(o.getTheLeftInput())){
+			result.setTheLeftInput(this.g.getTheCopies().get(o.getTheLeftInput()));
+		}
+		else{
 			visit(o.getTheLeftInput());
 			result.setTheLeftInput(g.getResult());
-//		}
-//		if(g.getTheCopies().containsKey(o.getTheRightInput())){
-//			result.setTheRightInput(this.g.getTheCopies().get(o.getTheRightInput()));
-//		}
-//		else{
+		}
+		if(g.getTheCopies().containsKey(o.getTheRightInput())){
+			result.setTheRightInput(this.g.getTheCopies().get(o.getTheRightInput()));
+		}
+		else{
 			visit(o.getTheRightInput());
 			result.setTheRightInput(g.getResult());
-//		}
+		}
 		g.setResult(result);
 	}
 	
