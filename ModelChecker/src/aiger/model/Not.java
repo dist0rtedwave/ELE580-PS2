@@ -16,4 +16,9 @@ public class Not extends Expression{
 		this.theExpression = theExpression;
 	}
 	
+	  public final int getDescriptor() {
+		  return DESCRIPTOR;
+	  }
+	  
+	public final static int DESCRIPTOR=4;
 }
