@@ -1,0 +1,14 @@
+aag
+2    in1
+4    in2
+6    latch 1
+8    latch 2
+     output
+10 6 2   latch1 && in1
+12 7 3   !latch1 && !in1
+14 11 13 latch1 xor in1
+16 8 4   latch2 && in2
+18 9 5   !latch2 && !in2
+20 17 19 latch2 xor in2
+22 14 20 
+  
