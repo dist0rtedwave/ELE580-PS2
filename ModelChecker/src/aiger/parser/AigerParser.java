@@ -1,5 +1,7 @@
 package aiger.parser;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -7,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+
+import util.Util;
+
 
 import aiger.model.AigerFile;
 import aiger.model.AndGate;
@@ -63,6 +68,17 @@ public class AigerParser {
 		unresolvedOutputs.add(s.nextInt());
 	}
 	
+	public static AigerFile parseFile(File file){
+		String fileString="";
+		try {
+			fileString = Util.readFileAsString(file.getAbsolutePath());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		AigerParser parser = new AigerParser();
+		return parser.parseFile(fileString);
+	}
+	
 	public AigerFile parseFile(String file){
 		Scanner lineScanner = new Scanner(file);
 		readHeader(lineScanner.nextLine());
@@ -108,7 +124,7 @@ public class AigerParser {
 			List<Integer> l = unresolvedAnds.get(i);
 			int lhs = l.get(0);
 			int rhs = l.get(1);
-			AndGate ag = (AndGate)symbols.get(String.valueOf(i));
+			AndGate ag = (AndGate)symbols.get(i);
 			ag.setTheLeftInput(getSymbol(lhs));
 			ag.setTheRightInput(getSymbol(rhs));
 		}
