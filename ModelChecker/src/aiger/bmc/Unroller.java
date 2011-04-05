@@ -29,6 +29,7 @@ public class Unroller {
 //			System.out.println("k=" + i);
 			for(Expression e : af.getTheOutputs()){
 				logic.model.Expression lexp = CNFTranslator.CNFTranslate(e);
+				lexp = LiteralSimplifier.simplifyLiterals(NotDistributor.distributeNots(lexp));
 				if(result==null){
 					result = lexp;
 				}
