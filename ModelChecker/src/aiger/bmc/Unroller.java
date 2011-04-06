@@ -23,7 +23,7 @@ public class Unroller {
 		}
 	}
 	
-	public static void unroll(AigerFile af, int k){
+	public static logic.model.Expression unroll(AigerFile af, int k){
 		logic.model.Expression result=null;
 		for(int i=0; i<k; i++){
 //			System.out.println("k=" + i);
@@ -40,19 +40,20 @@ public class Unroller {
 			}
 			unrollOnce(af);
 		}
-        FileOutputStream out; // declare a file output object
-        PrintStream p = null; // declare a print stream object
-		try
-        {
-			out = new FileOutputStream("cnfout.txt");
-			// Connect print stream to the output stream
-               p = new PrintStream( out );
-        }
-        catch (Exception e)
-        {
-             System.err.println ("Error writing to file");
-        }
-        p.println(PrintVisitor.expressionToString(LiteralSimplifier.simplifyLiterals(NotDistributor.distributeNots(result))));
+//        FileOutputStream out; // declare a file output object
+//        PrintStream p = null; // declare a print stream object
+//		try
+//        {
+//			out = new FileOutputStream("cnfout.txt");
+//			// Connect print stream to the output stream
+//               p = new PrintStream( out );
+//        }
+//        catch (Exception e)
+//        {
+//             System.err.println ("Error writing to file");
+//        }
+//        p.println(PrintVisitor.expressionToString(LiteralSimplifier.simplifyLiterals(NotDistributor.distributeNots(result))));
 		//System.pr.println(PrintVisitor.expressionToString(result));
+		return result;
 	}
 }
