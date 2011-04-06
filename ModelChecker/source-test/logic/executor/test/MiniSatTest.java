@@ -28,35 +28,41 @@ public class MiniSatTest {
 	
 	@Test
 	public  void testPrintExample2() throws IOException{
-		MiniSat.exec(Examples.getTotalExample2());
+		MiniSat ms = new MiniSat();
+		ms.exec(Examples.getTotalExample2());
 	}
 	
 	@Test
 	public  void testPrintExample3() throws IOException{
-		MiniSat.exec(Examples.getTotalExample3());
+		MiniSat ms = new MiniSat();
+		ms.exec(Examples.getTotalExample3());
 	}
 	
 	
 	@Test
 	public  void testPrintExample4() throws IOException{
-		MiniSat.exec(Examples.getTotalExample4());
+		MiniSat ms = new MiniSat();
+		ms.exec(Examples.getTotalExample4());
 	}
 	
 	
 	@Test
 	public  void testPrintExample5() throws IOException{
-		MiniSat.exec(Examples.getTotalExample5());
+		MiniSat ms = new MiniSat();
+		ms.exec(Examples.getTotalExample5());
 	}
 	
 	
 	@Test
 	public  void testPrintExample6() throws IOException{
-		MiniSat.exec(Examples.getTotalExample6());
+		MiniSat ms = new MiniSat();
+		ms.exec(Examples.getTotalExample6());
 	}
 	
 	@Test
 	public  void testPrintExample7() throws IOException{
-		MiniSat.exec(Examples.getTotalExample7());
+		MiniSat ms = new MiniSat();
+		ms.exec(Examples.getTotalExample7());
 	}
 	
 }

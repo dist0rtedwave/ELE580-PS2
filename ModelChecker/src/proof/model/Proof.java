@@ -11,7 +11,7 @@ import java.util.Iterator;
 public class Proof {
 	ArrayList<Clause> clauses = null;
 	
-	public void traverse(String filename)
+	public void load(String filename)
 	{
 		FileInputStream fs = null;
 		try {
@@ -96,18 +96,14 @@ public class Proof {
 	}
 
 	
-	public void printClauses()
+	public void traverse(ProofTraverser t)
 	{
 		Iterator<Clause> it = clauses.iterator();
 		while (it.hasNext())
 		{
-			it.next().print();
+			it.next().traverse(t);
 		}
 	}
-	
-	
-	
-	
 	
 static long getLong(FileInputStream in) throws IOException	
 {

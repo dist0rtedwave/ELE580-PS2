@@ -97,4 +97,9 @@ public class ChainClause extends Clause {
 		while(it_literal.hasNext()) {System.out.print(" "+it_literal.next().toString());}
 		System.out.println("\nEnd of Chain Clause");
 	}
+	
+	void traverse(ProofTraverser r)
+	{
+		r.chain(this);
+	}
 }

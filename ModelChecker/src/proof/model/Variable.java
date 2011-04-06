@@ -13,5 +13,10 @@ public class Variable {
 	{
 		return ""+this.value;
 	}
+	
+	public int getVariableNo()
+	{
+		return this.value;
+	}
 
 }

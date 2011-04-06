@@ -1,5 +1,6 @@
 package proof.model;
 
-public class ProofTraverser {
-
+abstract public class ProofTraverser {	
+	abstract void chain(ChainClause clause);
+	abstract void root(RootClause clause);
 }

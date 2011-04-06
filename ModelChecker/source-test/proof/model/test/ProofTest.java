@@ -8,6 +8,8 @@ import logic.test.examples.Examples;
 
 import org.junit.Test;
 
+import proof.model.IdentifierPrinterTraverser;
+import proof.model.NamePrinterTraverser;
 import proof.model.Proof;
 
 public class ProofTest {
@@ -18,7 +20,9 @@ public class ProofTest {
 		ms.exec(Examples.getExample7());
 		
 		Proof p = new Proof();
-		p.traverse("/tmp/proof");
-		p.printClauses();
+		p.load("/tmp/proof");
+		NamePrinterTraverser npt = new NamePrinterTraverser();
+		npt.setNameMap(ms.getNameMap());
+		p.traverse(npt);
 	}
 }

@@ -4,7 +4,6 @@ import logic.model.*;
 import java.util.HashMap;
 
 public class DimacsPrinter extends Visitor<StringBuilder> {
-	
 	protected HashMap<String, Integer> nameMap;
 	protected int nameCounter;
 	protected int andCounter;
@@ -49,6 +48,11 @@ public class DimacsPrinter extends Visitor<StringBuilder> {
 		g.append("0 \n");
 		
 		return "c "+PrintVisitor.expressionToString(e)+"\n"+"p cnf "+ (this.nameCounter-1) +" "+ (this.andCounter+1)+"\n"+g.toString();
+	}
+	
+	public HashMap<String, Integer> getNameMap()
+	{
+		return this.nameMap;
 	}
 
 }

@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 import logic.converter.Converter;
 import logic.converter.ImpRemover;
@@ -81,4 +82,9 @@ public class MiniSat {
        }
        return true;
    }
+   
+	public HashMap<String, Integer> getNameMap()
+	{
+		return this.printer.getNameMap();
+	}
 }

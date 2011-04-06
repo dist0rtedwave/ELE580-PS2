@@ -26,6 +26,11 @@ public class Literal {
 		return new Variable(this.store/2);
 	}
 	
+	public int getVariableNo()
+	{
+		return (this.store/2);
+	}
+	
 	public Boolean isNegative()
 	{
 		return ((this.store & 1) == 1);
