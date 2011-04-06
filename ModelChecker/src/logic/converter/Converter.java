@@ -88,12 +88,12 @@ public class Converter extends Visitor<ConverterContext> {
 	}
 	
 	@Override
-	protected void VisitFalseLiteral(FalseLiteral o) {
+	protected void visitFalseLiteral(FalseLiteral o) {
 		this.g.setLiteral(true);
 	}
 	
 	@Override
-	protected void VisitTrueLiteral(TrueLiteral o) {
+	protected void visitTrueLiteral(TrueLiteral o) {
 		this.g.setLiteral(true);
 	}
 	
