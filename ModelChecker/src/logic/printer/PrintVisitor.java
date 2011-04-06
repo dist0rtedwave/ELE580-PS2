@@ -15,18 +15,19 @@ public class PrintVisitor extends Visitor<StringBuilder> {
 	protected void visitBinaryOp(BinaryOp o) {
 		g.append(" (");
 		visit(o.getTheLHS());
-		g.append(") ");
+		g.append(")");
+		g.append(" ");
 		g.append(o.getTheBinaryOperator());
 		g.append(" (");
 		visit(o.getTheRHS());
-		g.append(") ");
+		g.append(")");
 	}
 	
 	protected void visitUnaryOp(UnaryOp o){
 		g.append(o.getTheOperator());
 		g.append(" (");
 		visit(o.getTheExpression());
-		g.append(") ");
+		g.append(")");
 	}
 
 	protected void visitFalseLiteral(FalseLiteral o){

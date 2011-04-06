@@ -33,6 +33,40 @@ public class LiteralSimplifier extends Visitor<LiteralSimplifierContext>{
 		boolean leftLiteral = g.theLiteral;
 		visit(o.getTheRHS());
 		boolean right = g.isLiteral;
+		if(o.getTheBinaryOperator() == BinaryOperator.AND){
+			if((left && !leftLiteral) || (right && !g.theLiteral)){
+				g.result=EF.createFalseLiteral();
+				g.theLiteral=false;
+				g.isLiteral=true;
+				return;
+			}
+			if(left&& leftLiteral){
+				return;
+			}
+			if(right && g.theLiteral){
+				g.isLiteral=left;
+				g.theLiteral=leftLiteral;
+				g.result=lhs;
+				return;
+			}
+		}
+		if(o.getTheBinaryOperator()==BinaryOperator.OR){
+			if((left && leftLiteral)|| (right && g.theLiteral)){
+				g.result=EF.createTrueLiteral();
+				g.theLiteral=true;
+				g.isLiteral=true;
+				return;
+			}
+			if(left&& !leftLiteral){
+				return;
+			}
+			if(right && !g.theLiteral){
+				g.isLiteral=left;
+				g.theLiteral=leftLiteral;
+				g.result=lhs;
+				return;
+			}
+		}
 		if(left && right)
 		{
 			if(o.getTheBinaryOperator()==BinaryOperator.AND){
@@ -71,7 +105,11 @@ public class LiteralSimplifier extends Visitor<LiteralSimplifierContext>{
 	}
 	
 
-
+	@Override
+	protected void visitVariable(Variable o) {
+		g.isLiteral = false;
+		g.result=o;
+	}
 	
 	@Override
 	protected void visitUnaryOp(UnaryOp o) {

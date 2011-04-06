@@ -76,4 +76,9 @@ public class NotDistributionTest{
 		testNot(MiniSat.convertExpression(Examples.getExample1()));
 	}
 	
+	@Test
+	public void test12(){
+		testNot(Examples.getNotExample11());
+	}
+	
 }
