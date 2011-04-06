@@ -299,4 +299,64 @@ public class Examples {
 	public static Expression getTotalExample7(){
 		return EF.createNot(EF.createAnd(EF.createOr("x",EF.createOr(EF.createNot("y"), EF.createNot("z"))),EF.createOr("x",EF.createOr(EF.createNot("y"), EF.createNot("w")))));
 	}
+	
+	public static Expression getNotExample11(){
+		return EF.createAnd(EF.createNot(EF.createNot(EF.createVariable("1"))), EF.createNot(EF.createFalseLiteral()));
+	}
+	
+	public static Expression getLiteralExample1(){
+		return EF.createAnd(EF.createTrueLiteral(), EF.createTrueLiteral());
+	}
+	
+	public static Expression getLiteralExample2(){
+		return EF.createAnd(EF.createFalseLiteral(), EF.createFalseLiteral());
+	}
+	
+	public static Expression getLiteralExample3(){
+		return EF.createAnd(EF.createFalseLiteral(), EF.createTrueLiteral());
+	}
+	
+	public static Expression getLiteralExample4(){
+		return EF.createOr(EF.createFalseLiteral(), EF.createFalseLiteral());
+	}
+	
+	public static Expression getLiteralExample5(){
+		return EF.createOr(EF.createTrueLiteral(), EF.createFalseLiteral());
+	}
+	
+	public static Expression getLiteralExample6(){
+		return EF.createOr(EF.createTrueLiteral(), EF.createTrueLiteral());
+	}
+	
+	public static Expression getLiteralExample7(){
+		return EF.createAnd(EF.createVariable("x"), EF.createFalseLiteral());
+	}
+	
+	public static Expression getLiteralExample8(){
+		return EF.createAnd(EF.createVariable("x"), EF.createTrueLiteral());
+	}
+	
+	public static Expression getLiteralExample9(){
+		return EF.createAnd(EF.createTrueLiteral(), EF.createVariable("x"));
+	}
+	
+	public static Expression getLiteralExample10(){
+		return EF.createAnd(EF.createFalseLiteral(), EF.createVariable("x"));
+	}
+	
+	public static Expression getLiteralExample11(){
+		return EF.createOr(EF.createVariable("x"), EF.createFalseLiteral());
+	}
+	
+	public static Expression getLiteralExample12(){
+		return EF.createOr(EF.createVariable("x"), EF.createTrueLiteral());
+	}
+	
+	public static Expression getLiteralExample13(){
+		return EF.createOr(EF.createTrueLiteral(), EF.createVariable("x"));
+	}
+	
+	public static Expression getLiteralExample14(){
+		return EF.createOr(EF.createFalseLiteral(), EF.createVariable("x"));
+	}
 }

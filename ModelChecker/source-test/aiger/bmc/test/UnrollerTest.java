@@ -2,6 +2,9 @@ package aiger.bmc.test;
 
 import java.io.File;
 
+import logic.model.Expression;
+import logic.printer.PrintVisitor;
+
 import org.junit.Test;
 
 import aiger.bmc.Unroller;
@@ -14,9 +17,9 @@ public class UnrollerTest {
 	private String simpleExamples = examplesDir + File.separator + "simpleExamples";
 	private String benchmarks = examplesDir + File.separator + "converted";
 	
-	private void testUnroller(File file, int k){
+	private Expression testUnroller(File file, int k){
 		AigerFile aigerFile = AigerParser.parseFile(file);
-		Unroller.unroll(aigerFile, k);
+		return Unroller.unroll(aigerFile, k);
 	}
 	
 	@Test
@@ -46,7 +49,7 @@ public class UnrollerTest {
 	@Test
 	public void testSimpleSafety(){
 		File f = new File(simpleExamples + File.separator + "simple-safety.aag");
-		testUnroller(f, 2);
+		System.out.println(PrintVisitor.expressionToString(testUnroller(f, 2)));
 	}
 	
 	

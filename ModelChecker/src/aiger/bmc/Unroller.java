@@ -1,12 +1,8 @@
 package aiger.bmc;
 
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-
 import logic.converter.LiteralSimplifier;
 import logic.converter.NotDistributor;
 import logic.model.EF;
-import logic.printer.PrintVisitor;
 import aiger.model.AigerFile;
 import aiger.model.Expression;
 import aiger.model.Latch;
@@ -30,6 +26,7 @@ public class Unroller {
 			for(Expression e : af.getTheOutputs()){
 				logic.model.Expression lexp = CNFTranslator.CNFTranslate(e);
 				lexp = LiteralSimplifier.simplifyLiterals(NotDistributor.distributeNots(lexp));
+				//lexp = NotDistributor.distributeNots(lexp);
 				if(result==null){
 					result = lexp;
 				}
