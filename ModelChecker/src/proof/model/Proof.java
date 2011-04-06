@@ -78,7 +78,8 @@ public class Proof {
 					
 					if(pivots.size() == 0)
 					{
-						assert(false); //need to implement deleted
+						
+						//assert(false); //need to implement deleted
 					}
 					else
 					{

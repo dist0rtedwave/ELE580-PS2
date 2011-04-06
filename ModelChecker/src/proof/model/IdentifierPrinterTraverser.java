@@ -7,6 +7,10 @@ public class IdentifierPrinterTraverser extends ProofTraverser{
 	
 	void printLiterals(ArrayList<Literal> literals)
 	{
+		if(literals.size()==0)
+		{
+			System.out.print("[empty]");
+		}
 		Iterator<Literal> it_literal;
 		it_literal = literals.iterator();
 		while(it_literal.hasNext()) {System.out.print(" "+it_literal.next().toString());}
