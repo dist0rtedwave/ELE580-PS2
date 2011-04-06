@@ -49,5 +49,5 @@ public class ParserTest {
 		File f = new File(simpleExamples + File.separator + "simplestate.aig");
 		AigerFile ret = parseFile(f.getAbsolutePath());
 	}
-	
+
 }

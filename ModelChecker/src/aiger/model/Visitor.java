@@ -1,5 +1,7 @@
 package aiger.model;
 
+
+
 public class Visitor<G> {
 
 	protected G g;
@@ -34,12 +36,12 @@ public class Visitor<G> {
 		}
 	}
 
-	private void visitTrueLiteral(TrueLiteral o) {
+	protected void visitTrueLiteral(TrueLiteral o) {
 		assert o != null;
 		visitExpression(o);
 	}
 
-	private void visitFalseLiteral(FalseLiteral o) {
+	protected void visitFalseLiteral(FalseLiteral o) {
 		assert o != null;
 		visitExpression(o);
 	}
@@ -82,5 +84,7 @@ public class Visitor<G> {
 		}
 		visitExpression(o);
 	}
+
+
 
 }

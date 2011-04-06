@@ -3,6 +3,8 @@ package logic.decoder;
 import logic.model.BinaryOp;
 import logic.model.BinaryOperator;
 import logic.model.Expression;
+import logic.model.FalseLiteral;
+import logic.model.TrueLiteral;
 import logic.model.UnaryOp;
 import logic.model.UnaryOperator;
 import logic.model.Variable;
@@ -239,6 +241,16 @@ public class Tseitin2CNFDecoder extends Visitor<TseitinDecoderContext>{
 	}
 	
 	protected void visitUnaryOp(UnaryOp o){
+		//visit(o.getTheExpression());
+		this.g.setChild(o);
+	}
+	
+	protected void visitFalseLiteral(FalseLiteral o){
+		//visit(o.getTheExpression());
+		this.g.setChild(o);
+	}
+	
+	protected void visitTrueLiteral(TrueLiteral o){
 		//visit(o.getTheExpression());
 		this.g.setChild(o);
 	}

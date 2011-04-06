@@ -22,7 +22,21 @@ public class Visitor<G> {
 		case UnaryOp.DESCRIPTOR:
 			visitUnaryOp((UnaryOp)o);
 			break;
+		case FalseLiteral.DESCRIPTOR:
+			visitFalseLiteral((FalseLiteral)o);
+			break;
+		case TrueLiteral.DESCRIPTOR:
+			visitTrueLiteral((TrueLiteral)o);
+			break;
 		}
+	}
+
+	protected void visitTrueLiteral(TrueLiteral o) {
+		assert o != null;
+	}
+
+	protected void visitFalseLiteral(FalseLiteral o) {
+		assert o != null;		
 	}
 
 	protected void visitExpression(Expression o){

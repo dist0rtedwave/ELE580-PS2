@@ -1,5 +1,10 @@
 package aiger.bmc;
 
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
+import logic.converter.LiteralSimplifier;
+import logic.converter.NotDistributor;
 import logic.model.EF;
 import logic.printer.PrintVisitor;
 import aiger.model.AigerFile;
@@ -24,6 +29,7 @@ public class Unroller {
 //			System.out.println("k=" + i);
 			for(Expression e : af.getTheOutputs()){
 				logic.model.Expression lexp = CNFTranslator.CNFTranslate(e);
+				lexp = LiteralSimplifier.simplifyLiterals(NotDistributor.distributeNots(lexp));
 				if(result==null){
 					result = lexp;
 				}
@@ -34,6 +40,19 @@ public class Unroller {
 			}
 			unrollOnce(af);
 		}
-		System.out.println(PrintVisitor.expressionToString(result));
+        FileOutputStream out; // declare a file output object
+        PrintStream p = null; // declare a print stream object
+		try
+        {
+			out = new FileOutputStream("cnfout.txt");
+			// Connect print stream to the output stream
+               p = new PrintStream( out );
+        }
+        catch (Exception e)
+        {
+             System.err.println ("Error writing to file");
+        }
+        p.println(PrintVisitor.expressionToString(LiteralSimplifier.simplifyLiterals(NotDistributor.distributeNots(result))));
+		//System.pr.println(PrintVisitor.expressionToString(result));
 	}
 }

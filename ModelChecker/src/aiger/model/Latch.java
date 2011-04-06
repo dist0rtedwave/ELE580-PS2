@@ -21,6 +21,10 @@ public class Latch extends Expression {
 		this.theCurrentState = new Variable(currentState);
 	}
 	
+	public Latch(Expression expr){
+		this.theCurrentState = expr;
+	}
+	
 	public Expression getTheCurrentState() {
 		return theCurrentState;
 	}

@@ -49,4 +49,31 @@ public class UnrollerTest {
 		testUnroller(f, 2);
 	}
 	
+	
+	@Test
+	public void testExample0(){
+		File f = new File(benchmarks + File.separator + "eijk.bs4863.S.aig.aag");
+		testUnroller(f, 2);
+	}
+	
+	@Test
+	public void testExample1(){
+		File f = new File(benchmarks + File.separator + "texas.ifetch1^5.E.aig.aag");
+		testUnroller(f, 3);
+	}
+	
+	@Test
+	public void testExample2(){
+		File f = new File(benchmarks + File.separator + "ken.flash^03.C.aig.aag");
+		testUnroller(f, 3);
+	}
+	
+	@Test
+	public void testExample3(){
+		File f = new File(benchmarks + File.separator + "nusmv.dme1-16.B.aig.aag");
+		testUnroller(f, 3);
+	}
+	
+	
+	
 }

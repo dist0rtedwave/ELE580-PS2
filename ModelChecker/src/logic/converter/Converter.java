@@ -87,6 +87,14 @@ public class Converter extends Visitor<ConverterContext> {
 		//if(weSetMakingEquivalences){ this.g.setMakingEquivalences(false);}
 	}
 	
-
-
+	@Override
+	protected void VisitFalseLiteral(FalseLiteral o) {
+		this.g.setLiteral(true);
+	}
+	
+	@Override
+	protected void VisitTrueLiteral(TrueLiteral o) {
+		this.g.setLiteral(true);
+	}
+	
 }

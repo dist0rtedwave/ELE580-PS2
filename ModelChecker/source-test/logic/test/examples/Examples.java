@@ -188,29 +188,6 @@ public class Examples {
         return top;
 	}
 	
-	public static Expression getTotalExample0(){
-		return EF.createNot(EF.createImp(EF.createNot(EF.createOr("z", EF.createOr("a", "b"))), EF.createEquiv("c", "d")));
-	}
-	
-	public static Expression getTotalExample3(){
-		return EF.createNot(EF.createOr(EF.createAnd("a", "b"), EF.createAnd("c","d")));
-	}
-	
-	public static Expression getTotalExample4(){
-		return EF.createImp(EF.createOr(EF.createAnd("a", "b"), EF.createAnd("c","d")),EF.createNot("z"));
-	}
-	
-	
-	public static Expression getTotalExample2(){
-		return EF.createNot(EF.createEquiv("a", "b"));
-	}
-	
-	
-	public static Expression getTotalExample1(){
-		return EF.createImp("a", "b");
-	}
-	
-	
 	public static Expression getImpExample0()
 	{
 		return EF.createVariable("a");
@@ -225,19 +202,23 @@ public class Examples {
 		return EF.createNot(EF.createEquiv("a", "b"));
 	}
 	
-	
 	public static Expression getImpExample3(){
 		return EF.createNot(EF.createImp("a", "b"));
 	}
+	
 	
 	public static Expression getImpExample4(){
 		return EF.createEquiv(EF.createImp("a", "b"), EF.createAnd("c", "d"));
 	}
 	
+
+	
+	
 	public static Expression getImpExample5(){
 		return EF.createNot(EF.createImp(EF.createOr("a", "b"), EF.createEquiv("c", "d")));
 	}
 	
+
 	
 	
 	public static Expression getNotExample0(){
@@ -247,6 +228,11 @@ public class Examples {
 	public static Expression getNotExample1(){
 		return EF.createNot("a");
 	}
+	
+	public static Expression getNotExample10(){
+		return EF.createAnd("z",EF.createNot(EF.createNot("a")));
+	}
+	
 	
 	public static Expression getNotExample2(){
 		return EF.createNot(EF.createNot("a"));
@@ -259,6 +245,8 @@ public class Examples {
 	public static Expression getNotExample4(){
 		return EF.createNot(getNotExample3());
 	}
+	
+	
 	
 	public static Expression getNotExample5(){
 		return EF.createNot(EF.createOr("a", "b"));
@@ -280,7 +268,35 @@ public class Examples {
 		return EF.createNot(EF.createOr(EF.createNot(EF.createNot("a")), getNotExample7()));
 	}
 	
-	public static Expression getNotExample10(){
-		return EF.createAnd("z",EF.createNot(EF.createNot("a")));
+	public static Expression getTotalExample0(){
+		return EF.createNot(EF.createImp(EF.createNot(EF.createOr("z", EF.createOr("a", "b"))), EF.createEquiv("c", "d")));
+	}
+	
+	public static Expression getTotalExample1(){
+		return EF.createImp("a", "b");
+	}
+	
+	public static Expression getTotalExample2(){
+		return EF.createNot(EF.createEquiv("a", "b"));
+	}
+	
+	public static Expression getTotalExample3(){
+		return EF.createNot(EF.createOr(EF.createAnd("a", "b"), EF.createAnd("c","d")));
+	}
+	
+	public static Expression getTotalExample4(){
+		return EF.createImp(EF.createOr(EF.createAnd("a", "b"), EF.createAnd("c","d")),EF.createNot("z"));
+	}
+	
+	public static Expression getTotalExample5(){
+		return EF.createAnd("a", EF.createNot("a"));
+	}
+	
+	public static Expression getTotalExample6(){
+		return EF.createEquiv("a", EF.createNot("a"));
+	}
+	
+	public static Expression getTotalExample7(){
+		return EF.createNot(EF.createAnd(EF.createOr("x",EF.createOr(EF.createNot("y"), EF.createNot("z"))),EF.createOr("x",EF.createOr(EF.createNot("y"), EF.createNot("w")))));
 	}
 }

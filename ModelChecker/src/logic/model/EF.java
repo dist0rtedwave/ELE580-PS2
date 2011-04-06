@@ -94,4 +94,12 @@ public class EF {
 		not.setTheOperator(UnaryOperator.NOT);
 		return not;
 	}
+	
+	public static FalseLiteral createFalseLiteral(){
+		return new FalseLiteral();
+	}
+	
+	public static TrueLiteral createTrueLiteral(){
+		return new TrueLiteral();
+	}
 }
