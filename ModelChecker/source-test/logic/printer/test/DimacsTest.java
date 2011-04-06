@@ -13,12 +13,14 @@ public class DimacsTest {
 	
 	@Test
 	public  void testPrintExample1(){
-		System.out.println(DimacsPrinter.expressionToString(Examples.getExample1()));
+		DimacsPrinter dp = new DimacsPrinter(new StringBuilder());
+		System.out.println(dp.expressionToString(Examples.getExample1()));
 	}
 	
 	@Test
 	public  void testPrintExample2(){
-		System.out.println(DimacsPrinter.expressionToString(Examples.getExample2()));
+		DimacsPrinter dp = new DimacsPrinter(new StringBuilder());
+		System.out.println(dp.expressionToString(Examples.getExample2()));
 	}
 
 
@@ -27,32 +29,38 @@ public class DimacsTest {
 	public  void testEquivRemover1(){
 		BinaryOp op = Examples.getExample3(); 
 		ImpRemover.removeImps(op);
-		System.out.println(DimacsPrinter.expressionToString(op));
+		DimacsPrinter dp = new DimacsPrinter(new StringBuilder());
+		System.out.println(dp.expressionToString(op));
 	}
 	
 	@Test // tests for regular equiv decoding i.e. a=>b)
 	public  void testTotalExample0(){	
-		System.out.println(DimacsPrinter.expressionToString(MiniSat.convertExpression((Examples.getTotalExample0()))));
+		DimacsPrinter dp = new DimacsPrinter(new StringBuilder());
+		System.out.println(dp.expressionToString(MiniSat.convertExpression((Examples.getTotalExample0()))));
 	}
 	
 	@Test
-	public  void testTotalExample1(){	
-		System.out.println(DimacsPrinter.expressionToString(MiniSat.convertExpression((Examples.getTotalExample1()))));
+	public  void testTotalExample1(){
+		DimacsPrinter dp = new DimacsPrinter(new StringBuilder());
+		System.out.println(dp.expressionToString(MiniSat.convertExpression((Examples.getTotalExample1()))));
 	}
 	
 	@Test
-	public  void testTotalExample2(){	
-		System.out.println(DimacsPrinter.expressionToString(MiniSat.convertExpression((Examples.getTotalExample2()))));
+	public  void testTotalExample2(){
+		DimacsPrinter dp = new DimacsPrinter(new StringBuilder());
+		System.out.println(dp.expressionToString(MiniSat.convertExpression((Examples.getTotalExample2()))));
 	}
 	
 	@Test
-	public  void testTotalExample3(){	
-		System.out.println(DimacsPrinter.expressionToString(MiniSat.convertExpression((Examples.getTotalExample3()))));
+	public  void testTotalExample3(){
+		DimacsPrinter dp = new DimacsPrinter(new StringBuilder());
+		System.out.println(dp.expressionToString(MiniSat.convertExpression((Examples.getTotalExample3()))));
 	}
 	
 	@Test
 	public  void testTotalExample4(){	
-		System.out.println(DimacsPrinter.expressionToString(MiniSat.convertExpression((Examples.getTotalExample4()))));
+		DimacsPrinter dp = new DimacsPrinter(new StringBuilder());
+		System.out.println(dp.expressionToString(MiniSat.convertExpression((Examples.getTotalExample4()))));
 	}
 	
 	

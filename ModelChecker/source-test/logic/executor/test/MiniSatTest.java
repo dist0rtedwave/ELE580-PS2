@@ -12,6 +12,15 @@ public class MiniSatTest {
 	
 	@Test
 	public  void testPrintExample1() throws IOException{
-		MiniSat.exec(Examples.getExample1());
+		MiniSat ms = new MiniSat();
+		Boolean ret = ms.exec(Examples.getExample1());
+		assert(ret==true);
+	}
+	
+	@Test
+	public  void testUnsatExample() throws IOException{
+		MiniSat ms = new MiniSat();
+		Boolean ret = ms.exec(Examples.getExample7());
+		assert(ret==false);
 	}
 }

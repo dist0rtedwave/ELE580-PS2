@@ -44,15 +44,11 @@ public class DimacsPrinter extends Visitor<StringBuilder> {
 		visit(o.getTheExpression());
 	}
 
-	public static String expressionToString(Expression e){
-		StringBuilder b = new StringBuilder();
-		DimacsPrinter v = new DimacsPrinter(b);
+	public String expressionToString(Expression e){		
+		this.visit(e);
+		g.append("0 \n");
 		
-		v.visit(e);
-		b.append("0 \n");
-		
-		
-		return "c "+PrintVisitor.expressionToString(e)+"\n"+"p cnf "+ (v.nameCounter-1) +" "+ (v.andCounter+1)+"\n"+b.toString();
+		return "c "+PrintVisitor.expressionToString(e)+"\n"+"p cnf "+ (this.nameCounter-1) +" "+ (this.andCounter+1)+"\n"+g.toString();
 	}
 
 }

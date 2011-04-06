@@ -6,10 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Proof {
-
-	static public void traverse(String filename)
+	ArrayList<Clause> clauses = null;
+	
+	public void traverse(String filename)
 	{
 		FileInputStream fs = null;
 		try {
@@ -19,7 +21,7 @@ public class Proof {
 			e.printStackTrace();
 		}
 		
-		ArrayList<Clause> clauses = new ArrayList<Clause>();
+		clauses = new ArrayList<Clause>();
 		
 		long tmp;
 		int idx;
@@ -34,6 +36,7 @@ public class Proof {
 			while (true)
 			{
 				tmp = getLong(fs);
+				//System.out.println("root tmp = "+tmp);
 				if (tmp == -1)
 					break;
 				
@@ -42,12 +45,14 @@ public class Proof {
 					root_clause = new RootClause();
 					tmp = tmp >> 1;
 					idx = (int) tmp;
+					//System.out.println("first literal idx = " +idx+" variable "+(idx/2));
 					lit = new Literal(idx);
 					root_clause.addLiteral(lit);
 		            while(true){
 		                tmp = getLong(fs);
 		                if (tmp == 0) break;
 		                idx += (int) tmp;
+		              //  System.out.println("subsequent idx = " +idx+" variable "+(idx/2));
 		                lit = new Literal(idx);
 		                root_clause.addLiteral(lit);
 		            }
@@ -90,16 +95,28 @@ public class Proof {
 	     
 	}
 
-int getInt(FileInputStream in)  throws IOException
+	
+	public void printClauses()
+	{
+		Iterator<Clause> it = clauses.iterator();
+		while (it.hasNext())
+		{
+			it.next().print();
+		}
+	}
+	
+	
+	
+	
+	
+static long getLong(FileInputStream in) throws IOException	
 {
-	long tmp = getLong(in);
-	
-	assert(tmp < Integer.MAX_VALUE);
-	
-	return (int)tmp;
+	long ret = Proof.getLongInt(in);
+	//System.out.println("got value "+ret);
+	return ret;
 }
 	
-static long getLong(FileInputStream in) throws IOException
+static long getLongInt(FileInputStream in) throws IOException
 {
     long byte0, byte1, byte2, byte3, byte4, byte5, byte6, byte7;
     byte0 = in.read();

@@ -11,6 +11,8 @@ import logic.model.Variable;
 
 public class Examples {
 	
+	
+	//  A/\B || C/\~D
 	public static Expression getExample1(){
 		Variable varA = new Variable();
 		varA.setTheName("a");
@@ -140,6 +142,51 @@ public class Examples {
 		return bop1;
 	}
 	
+	// UNSAT ((A \/ B) \/ (C \/ ~B)) /\ (~C /\ ~A)  
+	public static BinaryOp getExample7()
+	{
+		Variable varA = new Variable();
+		varA.setTheName("a");
+		Variable varB = new Variable();
+		varB.setTheName("b");
+		Variable varC = new Variable();
+		varC.setTheName("c");
+		
+		BinaryOp aorb = new BinaryOp();
+		aorb.setTheLHS(varB);
+		aorb.setTheRHS(varA);
+		aorb.setTheBinaryOperator(BinaryOperator.OR);
+  
+		BinaryOp cornb = new BinaryOp();
+		UnaryOp nb = new UnaryOp();
+		nb.setTheExpression(varB);
+		nb.setTheOperator(UnaryOperator.NOT);
+		cornb.setTheLHS(nb);
+		cornb.setTheRHS(varC);
+		cornb.setTheBinaryOperator(BinaryOperator.OR);
+	
+		BinaryOp cora = new BinaryOp();
+		cora.setTheLHS(aorb);
+		cora.setTheRHS(cornb);
+		cora.setTheBinaryOperator(BinaryOperator.AND);
+		
+		BinaryOp ncandna = new BinaryOp();
+		UnaryOp na = new UnaryOp();
+		na.setTheExpression(varA);
+		na.setTheOperator(UnaryOperator.NOT);
+		UnaryOp nc = new UnaryOp();
+		nc.setTheExpression(varC);
+		nc.setTheOperator(UnaryOperator.NOT);
+        ncandna.setTheLHS(na);
+        ncandna.setTheRHS(nc);
+        ncandna.setTheBinaryOperator(BinaryOperator.AND);
+        
+        BinaryOp top = new BinaryOp();
+        top.setTheLHS(ncandna);
+        top.setTheRHS(cora);
+        top.setTheBinaryOperator(BinaryOperator.AND);
+        return top;
+	}
 	
 	public static Expression getTotalExample0(){
 		return EF.createNot(EF.createImp(EF.createNot(EF.createOr("z", EF.createOr("a", "b"))), EF.createEquiv("c", "d")));

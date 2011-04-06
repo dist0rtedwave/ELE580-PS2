@@ -2,6 +2,8 @@ package logic.executor;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +19,8 @@ import logic.printer.DimacsPrinter;
 import logic.printer.PrintVisitor;
 
 public class MiniSat {
-
+   DimacsPrinter printer;
+	
    public static Expression convertExpression(Expression e)
    {
 	 //  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
@@ -34,24 +37,28 @@ public class MiniSat {
 	   return e;
    }
    
-   public static void writeCNF(Expression e)
+   public void writeCNF(Expression e)
    { 
 	   e = MiniSat.convertExpression(e);
 	    try {
-	    	BufferedWriter out = new BufferedWriter(new FileWriter("/tmp/input.cnf"));
-	    	out.write(DimacsPrinter.expressionToString(e));
-			out.close();
+	    	FileOutputStream fs = new FileOutputStream("/tmp/input.cnf", false);
+	    	this.printer = new DimacsPrinter(new StringBuilder());
+	    	String out = this.printer.expressionToString(e); 
+	    	fs.write(out.getBytes());
+            fs.flush();
+            fs.getFD().sync();
+            fs.close();
 		} catch (IOException exc) {
 			exc.printStackTrace();
 		}
    }
    
-   public static int exec(Expression e) throws IOException
+   public Boolean exec(Expression e) throws IOException
    {
-	   MiniSat.writeCNF(e);
+	   this.writeCNF(e);
        Runtime runtime = Runtime.getRuntime();
-	   String cmd = "../minisat/minisat /tmp/input-negrem.cnf";
-       String removeDoubles = "/home/zouf/Class/580/ps2/removeDoubles";
+	   String cmd = "../minisat/minisat /tmp/input-negrem.cnf -p /tmp/proof -r /tmp/result";
+       String removeDoubles = "../removeDoubles";
        runtime.exec(removeDoubles);
        Process process = runtime.exec(cmd);
        InputStream is = process.getInputStream();
@@ -59,12 +66,19 @@ public class MiniSat {
        BufferedReader br = new BufferedReader(isr);
        String line;
 
-       System.out.printf("Output of running %s is:",cmd 
+       System.out.printf("Output of running %s is:\n",cmd 
            );
 
        while ((line = br.readLine()) != null) {
          System.out.println(line);
        }
-	return 0;
+       
+       BufferedReader in = new BufferedReader(new FileReader("/tmp/result"));
+       String test = in.readLine();
+       if(test.startsWith("UNSAT"))
+       {
+    	   return false;
+       }
+       return true;
    }
 }

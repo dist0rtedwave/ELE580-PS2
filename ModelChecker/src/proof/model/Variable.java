@@ -7,5 +7,11 @@ public class Variable {
 	{
 		this.value = x;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return ""+this.value;
+	}
 
 }

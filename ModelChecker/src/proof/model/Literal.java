@@ -1,7 +1,9 @@
 package proof.model;
 
+import java.util.ArrayList;
+
 public class Literal {
-	int store;
+	final int store;
 	
 	public Literal(Variable val, Boolean sgn)
 	{
@@ -9,19 +11,47 @@ public class Literal {
 	  this.store = (val.value*val.value) + (true == sgn?1:0);
 	}
 	
-    public Literal() {
-		this.store = 0;
-	}
-    
     public Literal(int idx){
     	this.store = idx;
     }
 
 	public Literal getNegative()
 	{
-		Literal neg = new Literal();
-		neg.store = this.store ^ 1;
+		Literal neg = new Literal((this.store ^1));
 		return neg;
 	}
+	
+	public Variable getVariable()
+	{
+		return new Variable(this.store/2);
+	}
+	
+	public Boolean isNegative()
+	{
+		return ((this.store & 1) == 1);
+	}
+	public String toString()
+	{
+		Variable v = this.getVariable();		
+		if(this.isNegative())
+		{
+			return "-"+v.value;
+		}
+		return ""+v.value;	
+	}
+	
+    @Override public boolean equals(Object other) {
+        boolean result = false;
+        if (other instanceof Literal) {
+            Literal that = (Literal) other;
+            result = (this.store == that.store);
+        }
+        return result;
+    }
 
+    @Override public int hashCode() {
+        return (this.store);
+    }
+
+	
 }
