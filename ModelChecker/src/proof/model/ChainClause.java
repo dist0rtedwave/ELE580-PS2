@@ -66,7 +66,7 @@ public class ChainClause extends Clause {
 	{
 		if(this.resolvents == null)
 		{
-			this.resolve();
+			assert(this.resolve());
 		}
 		assert(this.resolvents != null);
 		return this.resolvents;

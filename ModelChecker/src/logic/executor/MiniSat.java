@@ -56,11 +56,13 @@ public class MiniSat {
    
    public Boolean exec(Expression e) throws IOException
    {
-	   this.writeCNF(e);
        Runtime runtime = Runtime.getRuntime();
-	   String cmd = "../minisat/minisat /tmp/input-negrem.cnf -p /tmp/proof -r /tmp/result";
-       String removeDoubles = "../removeDoubles";
-       runtime.exec(removeDoubles);
+       runtime.exec("rm /tmp/input.cnf");
+       this.writeCNF(e);
+       String cmd = "../minisat/minisat /tmp/input.cnf -p /tmp/proof -r /tmp/result";
+       //String removeDoubles = "../removeDoubles";
+       runtime.exec("rm /tmp/proof");
+       //runtime.exec(removeDoubles); //doesn't work because not synchronous.
        Process process = runtime.exec(cmd);
        InputStream is = process.getInputStream();
        InputStreamReader isr = new InputStreamReader(is);

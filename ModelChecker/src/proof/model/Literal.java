@@ -8,7 +8,7 @@ public class Literal {
 	public Literal(Variable val, Boolean sgn)
 	{
 	  assert(val.value < ((Integer.MAX_VALUE/2)-1));
-	  this.store = (val.value*val.value) + (true == sgn?1:0);
+	  this.store = (val.value+val.value) + (true == sgn?1:0);
 	}
 	
     public Literal(int idx){
@@ -23,12 +23,12 @@ public class Literal {
 	
 	public Variable getVariable()
 	{
-		return new Variable(this.store/2);
+		return new Variable(getVariableNo());
 	}
 	
 	public int getVariableNo()
 	{
-		return (this.store/2);
+		return (this.store>>1);
 	}
 	
 	public Boolean isNegative()
@@ -40,9 +40,9 @@ public class Literal {
 		Variable v = this.getVariable();		
 		if(this.isNegative())
 		{
-			return "-"+v.value;
+			return "-"+getVariableNo();
 		}
-		return ""+v.value;	
+		return ""+getVariableNo();	
 	}
 	
     @Override public boolean equals(Object other) {

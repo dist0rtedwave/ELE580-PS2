@@ -17,12 +17,15 @@ public class ProofTest {
 	@Test
 	public  void testUnSat() throws IOException{
 		MiniSat ms = new MiniSat();
-		ms.exec(Examples.getExample7());
+		boolean res = ms.exec(Examples.getExample7());
 		
-		Proof p = new Proof();
-		p.load("/tmp/proof");
-		NamePrinterTraverser npt = new NamePrinterTraverser();
-		npt.setNameMap(ms.getNameMap());
-		p.traverse(npt);
+		if(!res)
+		{
+			Proof p = new Proof();
+			p.load("/tmp/proof");
+			NamePrinterTraverser npt = new NamePrinterTraverser();
+			npt.setNameMap(ms.getNameMap());
+			p.traverse(npt);
+		}
 	}
 }
