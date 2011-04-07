@@ -18,22 +18,40 @@ public class CNFTranslator extends Visitor<CNFTranslatorContext> {
 	
 	@Override
 	protected void visitAndGate(AndGate o) {
-		visit(o.getTheLeftInput());
-		Expression left = g.result;
-		visit(o.getTheRightInput());
-		Expression right = g.result;
-		g.result=EF.createAnd(left, right);
+		if(g.exMap.containsKey(o)){
+			g.result=g.exMap.get(o);
+		}
+		else{
+			visit(o.getTheLeftInput());
+			Expression left = g.result;
+			visit(o.getTheRightInput());
+			Expression right = g.result;
+			g.result=EF.createAnd(left, right);
+			g.exMap.put(o, g.result);
+		}
 	}
 	
 	@Override
 	protected void visitNot(Not o) {
-		visit(o.getTheExpression());
-		g.result=EF.createNot(g.result);
+		if(g.exMap.containsKey(o)){
+			g.result=g.exMap.get(o);
+		}
+		else{
+			visit(o.getTheExpression());
+			g.result=EF.createNot(g.result);
+			g.exMap.put(o, g.result);
+		}
 	}
 	
 	@Override
 	protected void visitVariable(Variable o) {
-		g.result=EF.createVariable(String.valueOf(o.getTheVariableName()));
+		if(g.exMap.containsKey(o)){
+			g.result=g.exMap.get(o);
+		}
+		else{
+			g.result=EF.createVariable(String.valueOf(o.getTheVariableName()));
+			g.exMap.put(o, g.result);
+		}
 	}
 	
 	@Override
@@ -43,12 +61,24 @@ public class CNFTranslator extends Visitor<CNFTranslatorContext> {
 	
 	@Override
 	protected void visitFalseLiteral(FalseLiteral o) {
-		g.result=EF.createFalseLiteral();
+		if(g.exMap.containsKey(o)){
+			g.result =g.exMap.get(o);
+		}
+		else{
+			g.result=EF.createFalseLiteral();
+			g.exMap.put(o, g.result);
+		}
 	}
 	
 	@Override
 	protected void visitTrueLiteral(TrueLiteral o) {
-		g.result=EF.createFalseLiteral();
+		if(g.exMap.containsKey(o)){
+			g.result =g.exMap.get(o);
+		}
+		else{
+			g.result=EF.createTrueLiteral();
+			g.exMap.put(o, g.result);
+		}
 	}
 	
 	public static Expression CNFTranslate(aiger.model.Expression e){

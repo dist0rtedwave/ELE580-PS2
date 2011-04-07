@@ -3,6 +3,7 @@ package logic.converter.test;
 import org.junit.Test;
 
 import logic.decoder.Tseitin2CNFDecoder;
+import logic.model.EF;
 import logic.model.Expression;
 import logic.printer.PrintVisitor;
 import logic.test.examples.Examples;
@@ -43,5 +44,10 @@ public class ConverterTest {
 	@Test
 	public void test5(){
 		testConvert(Examples.getExample6());
+	}
+	
+	@Test
+	public void test6(){
+		testConvert(EF.createOr(EF.createOr(EF.createFalseLiteral(), EF.createFalseLiteral()), EF.createFalseLiteral()));
 	}
 }

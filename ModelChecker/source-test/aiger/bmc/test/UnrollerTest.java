@@ -49,20 +49,20 @@ public class UnrollerTest {
 	@Test
 	public void testSimpleSafety(){
 		File f = new File(simpleExamples + File.separator + "simple-safety.aag");
-		System.out.println(PrintVisitor.expressionToString(testUnroller(f, 2)));
+		System.out.println(PrintVisitor.expressionToString(testUnroller(f, 10)));
 	}
 	
 	
 	@Test
 	public void testExample0(){
 		File f = new File(benchmarks + File.separator + "eijk.bs4863.S.aig.aag");
-		testUnroller(f, 2);
+		testUnroller(f, 20);
 	}
 	
 	@Test
 	public void testExample1(){
 		File f = new File(benchmarks + File.separator + "texas.ifetch1^5.E.aig.aag");
-		testUnroller(f, 3);
+		testUnroller(f, 20);
 	}
 	
 	@Test

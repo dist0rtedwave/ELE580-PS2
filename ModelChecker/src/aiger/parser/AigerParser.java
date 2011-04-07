@@ -29,6 +29,9 @@ public class AigerParser {
 	private int o;
 	private int a;
 	
+	private TrueLiteral theTrueLiteral=new TrueLiteral();
+	private FalseLiteral theFalseLiteral= new FalseLiteral();
+	
 	private Map<Integer, Integer> unresolvedLatches = new HashMap<Integer, Integer>();
 	private Map<Integer, Expression> symbols = new HashMap<Integer, Expression>(); 
 	private List<Integer> unresolvedOutputs = new LinkedList<Integer>();
@@ -58,7 +61,7 @@ public class AigerParser {
 		int id = s.nextInt()/2;
 		int nextID = s.nextInt();
 		unresolvedLatches.put(id, nextID);
-		Latch l = new Latch(new FalseLiteral());
+		Latch l = new Latch(theFalseLiteral);
 		symbols.put(id, l);
 		return l;
 	}
@@ -106,10 +109,10 @@ public class AigerParser {
 	
 	private Expression getSymbol(int n){
 		if(n==0){
-			return new FalseLiteral();
+			return theFalseLiteral;
 		}
 		else if(n==1){
-			return new TrueLiteral();
+			return theTrueLiteral;
 		}
 		else if(n%2==0){
 			return symbols.get(n/2);

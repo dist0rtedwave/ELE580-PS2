@@ -1,7 +1,5 @@
 package aiger.bmc;
 
-import logic.converter.LiteralSimplifier;
-import logic.converter.NotDistributor;
 import logic.model.EF;
 import aiger.model.AigerFile;
 import aiger.model.Expression;
@@ -25,7 +23,7 @@ public class Unroller {
 //			System.out.println("k=" + i);
 			for(Expression e : af.getTheOutputs()){
 				logic.model.Expression lexp = CNFTranslator.CNFTranslate(e);
-				lexp = LiteralSimplifier.simplifyLiterals(NotDistributor.distributeNots(lexp));
+				//lexp = LiteralSimplifier.simplifyLiterals(NotDistributor.distributeNots(lexp));
 				//lexp = NotDistributor.distributeNots(lexp);
 				if(result==null){
 					result = lexp;
