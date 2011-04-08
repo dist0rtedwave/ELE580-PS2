@@ -8,10 +8,11 @@ public class Converter extends Visitor<ConverterContext> {
 
 	public static Expression convert(Expression e){
 		ConverterContext context = new ConverterContext();
-		context.setTheExpression(e);
+		context.globalResult = e;
+		context.visitResult = null;
 		Converter con = new Converter(context);
 		con.visit(e);
-		return context.getTheExpression();
+		return context.globalResult;
 	}
 	
 	public Converter(ConverterContext g) {
@@ -30,61 +31,53 @@ public class Converter extends Visitor<ConverterContext> {
 	
 	//assumes only and and or
 	protected void visitBinaryOp(BinaryOp o) {
-		//boolean weSetMakingEquivalences = false;
-		if(!this.g.isMakingEquivalences()){
-			if(o.getTheBinaryOperator().compareTo(BinaryOperator.AND)==0)
-			{
-				if(this.g.isOrSeen())
-				{
-					this.g.setMakingEquivalences(true);
-					//weSetMakingEquivalences=true;
-				}
-			}
-			else{
-				this.g.setOrSeen(true);
-			}
-		}
+		
+		if(g.exprCache.containsKey(o)){
+			g.visitResult=g.exprCache.get(o);
+			return;
+		}	
+		
 		visit(o.getTheLHS());
-		if(this.g.isMakingEquivalences()){
-			if(!g.isLiteral()){
-				Variable v = new Variable();
-				v.setTheName("_t" + this.g.getFreshNumber());
-				this.g.setFreshNumber(this.g.getFreshNumber()+1);
-				o.setTheLHS(v);
-			}
-			else{
-				g.setLiteral(false);
-			}
+		
+		if (!g.isLiteral()) {
+			o.setTheLHS(g.visitResult);
+		} else {
+			g.setLiteral(false);
+		}
+
+		visit(o.getTheRHS());
+		
+		if (!g.isLiteral()) {
+			o.setTheRHS(g.visitResult);
+		} else {
+			g.setLiteral(false);
+		}
+
+
+		if(g.exprCache.containsKey(o)){
+			g.globalResult=g.exprCache.get(o);
+			return;
 		}
 		
-		visit(o.getTheRHS());
-		if(this.g.isMakingEquivalences()){
-			if(!g.isLiteral()){
-				Variable v = new Variable();
-				v.setTheName("_t" + this.g.getFreshNumber());
-				this.g.setFreshNumber(this.g.getFreshNumber()+1);
-				o.setTheRHS(v);
-			}
-			else{
-				g.setLiteral(false);
-			}
-			
-			
-			BinaryOp equiv = new BinaryOp();
-			equiv.setTheBinaryOperator(BinaryOperator.EQUIV);
-			Variable newT = new Variable();
-			newT.setTheName("_t" + this.g.getFreshNumber());
-			equiv.setTheLHS(newT);
-			equiv.setTheRHS(o);
-			
-			BinaryOp newExpr = new BinaryOp();
-			newExpr.setTheLHS(g.getTheExpression());
-			newExpr.setTheRHS(equiv);
-			newExpr.setTheBinaryOperator(BinaryOperator.AND);
-			
-			g.setTheExpression(newExpr);
-		}
-		//if(weSetMakingEquivalences){ this.g.setMakingEquivalences(false);}
+		// {new va  <=> {this binary op}
+		BinaryOp equiv = new BinaryOp();
+		equiv.setTheBinaryOperator(BinaryOperator.EQUIV);
+		Variable newT = new Variable();
+		newT.setTheName("_t" + this.g.getFreshNumber());
+		this.g.setFreshNumber(this.g.getFreshNumber()+1);
+		equiv.setTheLHS(newT);
+		equiv.setTheRHS(o);
+
+		g.exprCache.put(o, newT);		
+		
+		//append to end of g.result
+		BinaryOp newExpr = new BinaryOp();
+		newExpr.setTheLHS(g.globalResult);
+		newExpr.setTheRHS(equiv);
+		newExpr.setTheBinaryOperator(BinaryOperator.AND);
+		
+		g.visitResult = newT;
+		g.globalResult = newExpr;
 	}
 	
 	@Override

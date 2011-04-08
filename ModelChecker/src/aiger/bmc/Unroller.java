@@ -1,5 +1,6 @@
 package aiger.bmc;
 
+import logic.converter.NotDistributor;
 import logic.model.EF;
 import aiger.model.AigerFile;
 import aiger.model.Expression;
@@ -24,7 +25,7 @@ public class Unroller {
 			for(Expression e : af.getTheOutputs()){
 				logic.model.Expression lexp = CNFTranslator.CNFTranslate(e,i*af.getTheMaxVariable());
 				//lexp = LiteralSimplifier.simplifyLiterals(NotDistributor.distributeNots(lexp));
-				//lexp = NotDistributor.distributeNots(lexp);
+				lexp = NotDistributor.distributeNots(lexp);
 				if(result==null){
 					result = lexp;
 				}

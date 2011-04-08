@@ -1,38 +1,18 @@
 package logic.converter;
 
-import logic.model.BinaryOp;
+import java.util.HashMap;
+import java.util.Map;
+
 import logic.model.Expression;
 
 public class ConverterContext {
-	private boolean orSeen=false;
-	private Expression theExpression;
+	protected Expression globalResult;
+	protected Expression visitResult;
     private int freshNumber =0;
-    private boolean makingEquivalences=false;
     private boolean isLiteral=false;
     
-	public boolean isMakingEquivalences() {
-		return makingEquivalences;
-	}
-
-	public void setMakingEquivalences(boolean makingEquivalences) {
-		this.makingEquivalences = makingEquivalences;
-	}
-
-	public void setOrSeen(boolean orSeen) {
-		this.orSeen = orSeen;
-	}
-
-	public boolean isOrSeen() {
-		return orSeen;
-	}
-
-	public void setTheExpression(Expression e) {
-		this.theExpression = e;
-	}
-
-	public Expression getTheExpression() {
-		return theExpression;
-	}
+    protected HashMap<Expression, Expression> exprCache = new HashMap<Expression, Expression>();
+   
 
 	public void setFreshNumber(int freshNumber) {
 		this.freshNumber = freshNumber;
