@@ -37,6 +37,11 @@ public class NamePrinterTraverser extends IdentifierPrinterTraverser {
 	@Override
 	void printLiterals(ArrayList<Literal> literals)
 	{
+		if (literals == null)
+		{
+			System.out.print("[null]");
+			return;
+		}
 		if(literals.size()==0)
 		{
 			System.out.print("[empty]");
