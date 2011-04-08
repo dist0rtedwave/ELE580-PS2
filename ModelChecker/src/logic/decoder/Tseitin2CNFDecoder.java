@@ -200,7 +200,6 @@ public class Tseitin2CNFDecoder extends Visitor<TseitinDecoderContext>{
 	}
 	
 	protected void visitBinaryOp(BinaryOp o) {
-		
 		if(o.getTheBinaryOperator().compareTo(BinaryOperator.EQUIV) == 0)
 		{
 			if(g.exprCache.containsKey(o)){

@@ -65,7 +65,7 @@ public class FullTest {
 	@Test
 	public void testSmallestBenchmark(){
 		File f = new File(benchmarks + File.separator + "nusmv.syncarb5^2.B.aig.aag");
-		testRunner(f, 1);
+		testRunner(f, 100);
 	}
 	
 	@Test
@@ -78,13 +78,13 @@ public class FullTest {
 	@Test
 	public void testExample0(){
 		File f = new File(benchmarks + File.separator + "eijk.bs4863.S.aig.aag");
-		testRunner(f, 2);
+		testRunner(f, 5);
 	}
 	
 	@Test
 	public void testExample1(){
 		File f = new File(benchmarks + File.separator + "texas.ifetch1^5.E.aig.aag");
-		testRunner(f, 3);
+		testRunner(f, 20);
 	}
 	
 	@Test
