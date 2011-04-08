@@ -44,7 +44,7 @@ public class Visitor<G> {
 	}
 	
 	protected void visitVariable(Variable o) {
-		assert o != null;
+		assert o != null;	
 		visitExpression(o);
 	}
 	
@@ -66,5 +66,7 @@ public class Visitor<G> {
 		}
 		visitExpression(o);
 	}
+	
+
 
 }

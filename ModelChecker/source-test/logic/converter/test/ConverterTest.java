@@ -1,18 +1,18 @@
 package logic.converter.test;
 
-import org.junit.Test;
-
-import logic.decoder.Tseitin2CNFDecoder;
+import logic.converter.Converter;
 import logic.model.EF;
 import logic.model.Expression;
 import logic.printer.PrintVisitor;
 import logic.test.examples.Examples;
 
+import org.junit.Test;
+
 public class ConverterTest {
 	
 	private void testConvert(Expression e){
 		System.out.println(PrintVisitor.expressionToString(e) + "\n=");
-		Expression decode = Tseitin2CNFDecoder.decode(e);
+		Expression decode = Converter.convert(e);
 		System.out.println(PrintVisitor.expressionToString(decode) +"\n\n");
 	}
 	

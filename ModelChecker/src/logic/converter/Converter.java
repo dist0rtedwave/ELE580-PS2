@@ -21,44 +21,36 @@ public class Converter extends Visitor<ConverterContext> {
 	
 	@Override
 	protected void visitUnaryOp(UnaryOp o) {
-		this.g.setLiteral(true);
+		visit(o.getTheExpression());
+		o.setTheExpression(g.visitResult);
+		g.visitResult = o;
+		return;
 	}
 	
 	@Override
 	protected void visitVariable(Variable o) {
-		this.g.setLiteral(true);
+		this.g.visitResult = o;
+		return;
 	}
 	
 	//assumes only and and or
 	protected void visitBinaryOp(BinaryOp o) {
 		
-		if(g.exprCache.containsKey(o)){
+	/*	if(g.exprCache.containsKey(o)){
 			g.visitResult=g.exprCache.get(o);
 			return;
 		}	
-		
+*/		
 		visit(o.getTheLHS());
+		o.setTheLHS(g.visitResult);
 		
-		if (!g.isLiteral()) {
-			o.setTheLHS(g.visitResult);
-		} else {
-			g.setLiteral(false);
-		}
-
 		visit(o.getTheRHS());
+		o.setTheRHS(g.visitResult);
 		
-		if (!g.isLiteral()) {
-			o.setTheRHS(g.visitResult);
-		} else {
-			g.setLiteral(false);
-		}
-
-
-		if(g.exprCache.containsKey(o)){
-			g.globalResult=g.exprCache.get(o);
-			return;
-		}
-		
+		if(o.getTheRHS() instanceof BinaryOp)
+			throw new Error("RHS Cycle");
+		if(o.getTheLHS() instanceof BinaryOp)
+			throw new Error("LHS Cycle");
 		// {new va  <=> {this binary op}
 		BinaryOp equiv = new BinaryOp();
 		equiv.setTheBinaryOperator(BinaryOperator.EQUIV);
@@ -82,12 +74,14 @@ public class Converter extends Visitor<ConverterContext> {
 	
 	@Override
 	protected void visitFalseLiteral(FalseLiteral o) {
-		this.g.setLiteral(true);
+		this.g.visitResult = o;
+		return;
 	}
 	
 	@Override
 	protected void visitTrueLiteral(TrueLiteral o) {
-		this.g.setLiteral(true);
+		this.g.visitResult = o;
+		return;
 	}
 	
 }

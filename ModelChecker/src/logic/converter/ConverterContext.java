@@ -9,8 +9,7 @@ public class ConverterContext {
 	protected Expression globalResult;
 	protected Expression visitResult;
     private int freshNumber =0;
-    private boolean isLiteral=false;
-    
+
     protected HashMap<Expression, Expression> exprCache = new HashMap<Expression, Expression>();
    
 
@@ -22,12 +21,6 @@ public class ConverterContext {
 		return freshNumber;
 	}
 
-	public void setLiteral(boolean isLiteral) {
-		this.isLiteral = isLiteral;
-	}
 
-	public boolean isLiteral() {
-		return isLiteral;
-	}
 	
 }
