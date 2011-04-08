@@ -9,8 +9,14 @@ public class AigerFile {
 	Set<Expression> theOutputs = new HashSet<Expression>();
 	Map<Integer, Expression> theSymbols = new HashMap<Integer, Expression>();
 	Set<Latch> theLatches = new HashSet<Latch>();
+	int theMaxVariable;
 	
-	
+	public int getTheMaxVariable() {
+		return theMaxVariable;
+	}
+	public void setTheMaxVariable(int theMaxVariable) {
+		this.theMaxVariable = theMaxVariable;
+	}
 	public Set<Latch> getTheLatches() {
 		return theLatches;
 	}

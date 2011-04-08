@@ -233,6 +233,19 @@ public class Examples {
 		return EF.createAnd("z",EF.createNot(EF.createNot("a")));
 	}
 	
+	public static Expression getNotExample12(){
+		Variable sharedVariable = EF.createVariable("a");
+		return EF.createNot(EF.createAnd(EF.createNot(sharedVariable), sharedVariable));
+	}
+	
+	public static Expression getNotExample13(){
+		Variable sharedVariable = EF.createVariable("a");
+		BinaryOp sharedOp = EF.createAnd(EF.createNot(sharedVariable), sharedVariable);
+		BinaryOp op1 = EF.createAnd(EF.createFalseLiteral(), sharedOp);
+		BinaryOp op2 = EF.createOr(EF.createTrueLiteral(), EF.createNot(sharedOp));
+		return EF.createAnd(EF.createNot(op1), op2);
+	}
+	
 	
 	public static Expression getNotExample2(){
 		return EF.createNot(EF.createNot("a"));

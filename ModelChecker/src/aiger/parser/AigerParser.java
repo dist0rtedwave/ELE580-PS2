@@ -102,6 +102,7 @@ public class AigerParser {
 			readAndGate(lineScanner.nextLine());
 		}
 		AigerFile af = new AigerFile();
+		af.setTheMaxVariable(m);
 		link(af);
 		af.setTheSymbols(symbols);
 		return af;

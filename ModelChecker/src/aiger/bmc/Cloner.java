@@ -15,41 +15,41 @@ public class Cloner extends Visitor<ClonerContext>{
 	
 	@Override
 	protected void visitVariable(Variable o) {
-		g.setResult(o);
+		if(g.getTheCopies().containsKey(o)){
+			g.setResult(g.getTheCopies().get(o));
+		}
+		else{
+			Variable v = new Variable(o.getTheVariableName() + g.offset);
+			g.setResult(v);
+			g.getTheCopies().put(o, v);
+		}
 	}
 	
 	@Override
 	protected void visitNot(Not o) {
-		Not result = new Not(null);
-		g.getTheCopies().put(o, result);
-		if(g.getTheCopies().containsKey(o.getTheExpression())){
-			result.setTheExpression(g.getTheCopies().get(o.getTheExpression()));
+		if(g.getTheCopies().containsKey(o)){
+			g.setResult(g.getTheCopies().get(o));
 		}else{
 			visit(o.getTheExpression());
-			result.setTheExpression(g.getResult());
+			Not result = new Not(g.getResult());
+			g.getTheCopies().put(o, result);
+			g.setResult(result);
 		}
-		g.setResult(result);
 	}
 	
 	@Override
 	protected void visitAndGate(AndGate o) {
-		AndGate result = new AndGate(o.getTheName());
-		g.getTheCopies().put(o, result);
-		if(g.getTheCopies().containsKey(o.getTheLeftInput())){
-			result.setTheLeftInput(this.g.getTheCopies().get(o.getTheLeftInput()));
-		}
-		else{
+		if(g.getTheCopies().containsKey(o)){
+			g.setResult(g.getTheCopies().get(o));
+		}else{
+			AndGate andGate = new AndGate(o.getTheName());
 			visit(o.getTheLeftInput());
-			result.setTheLeftInput(g.getResult());
-		}
-		if(g.getTheCopies().containsKey(o.getTheRightInput())){
-			result.setTheRightInput(this.g.getTheCopies().get(o.getTheRightInput()));
-		}
-		else{
+			andGate.setTheLeftInput(g.getResult());
 			visit(o.getTheRightInput());
-			result.setTheRightInput(g.getResult());
+			andGate.setTheRightInput(g.getResult());
+			g.getTheCopies().put(o, andGate);
+			g.setResult(andGate);
 		}
-		g.setResult(result);
 	}
 	
 	@Override
@@ -57,8 +57,9 @@ public class Cloner extends Visitor<ClonerContext>{
 		g.setResult(o.getTheCurrentState());
 	}
 	
-	public static void clone(Latch l){
+	public static void clone(Latch l, int k, int maxVar){
 		ClonerContext g = new ClonerContext();
+		g.offset=k*maxVar;
 		Cloner c = new Cloner(g);
 		c.visit(l.getTheNextState());
 		l.setTheInterimState(g.getResult());

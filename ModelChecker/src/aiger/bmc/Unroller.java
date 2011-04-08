@@ -8,9 +8,9 @@ import aiger.model.Latch;
 public class Unroller {
 // iterates over latches, calls clone on each. When done updates state
 // then calls class to create CNF
-	public static void unrollOnce(AigerFile af){
+	public static void unrollOnce(AigerFile af, int k){
 		for(Latch l : af.getTheLatches()){
-			Cloner.clone(l);
+			Cloner.clone(l, k, af.getTheMaxVariable());
 		}
 		for(Latch l : af.getTheLatches()){
 			l.setTheCurrentState(l.getTheInterimState());
@@ -22,7 +22,7 @@ public class Unroller {
 		for(int i=0; i<k; i++){
 //			System.out.println("k=" + i);
 			for(Expression e : af.getTheOutputs()){
-				logic.model.Expression lexp = CNFTranslator.CNFTranslate(e);
+				logic.model.Expression lexp = CNFTranslator.CNFTranslate(e,i*af.getTheMaxVariable());
 				//lexp = LiteralSimplifier.simplifyLiterals(NotDistributor.distributeNots(lexp));
 				//lexp = NotDistributor.distributeNots(lexp);
 				if(result==null){
@@ -33,7 +33,7 @@ public class Unroller {
 				}
 //				System.out.println(PrintVisitor.expressionToString(lexp) + "\n\n");
 			}
-			unrollOnce(af);
+			unrollOnce(af,i);
 		}
 //        FileOutputStream out; // declare a file output object
 //        PrintStream p = null; // declare a print stream object

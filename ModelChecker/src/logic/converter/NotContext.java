@@ -1,5 +1,8 @@
 package logic.converter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import logic.model.Expression;
 
 public class NotContext {
@@ -17,4 +20,8 @@ public class NotContext {
 		this.negating = negating;
 	}
 	private boolean negating=false; 
+
+	protected Map<Expression, Expression> nonNegatedMap=new HashMap<Expression, Expression>();
+	protected Map<Expression, Expression> negatedMap = new HashMap<Expression, Expression>();
+
 }

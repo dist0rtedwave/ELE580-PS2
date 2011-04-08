@@ -49,7 +49,7 @@ public class UnrollerTest {
 	@Test
 	public void testSimpleSafety(){
 		File f = new File(simpleExamples + File.separator + "simple-safety.aag");
-		System.out.println(PrintVisitor.expressionToString(testUnroller(f, 10)));
+		System.out.println(PrintVisitor.expressionToString(testUnroller(f, 2)));
 	}
 	
 	

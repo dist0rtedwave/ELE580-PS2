@@ -81,4 +81,16 @@ public class NotDistributionTest{
 		testNot(Examples.getNotExample11());
 	}
 	
+	@Test
+	public void test13(){
+		testNot(Examples.getNotExample12());
+	}
+	
+	@Test
+	public void test14(){
+		testNot(Examples.getNotExample13());
+	}
+	
+	
+	
 }

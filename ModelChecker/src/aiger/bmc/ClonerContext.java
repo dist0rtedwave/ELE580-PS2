@@ -6,7 +6,7 @@ import java.util.Map;
 import aiger.model.Expression;
 
 public class ClonerContext {
-	
+	protected int offset;
 	private Map<Expression, Expression> theCopies = new HashMap<Expression, Expression>();
 	private Expression result=null;
 	public Map<Expression, Expression> getTheCopies() {
