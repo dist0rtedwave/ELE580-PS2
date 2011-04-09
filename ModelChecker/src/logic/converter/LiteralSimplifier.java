@@ -129,6 +129,18 @@ public class LiteralSimplifier extends Visitor<LiteralSimplifierContext>{
 			g.theLiteral = true;
 			return;
 		}
+		else if (!g.isLiteral && g.result.getDescriptor() == UnaryOp.DESCRIPTOR)
+		{
+			UnaryOp sub = (UnaryOp) g.result;
+			if(sub.getTheOperator() == UnaryOperator.NOT)
+			{
+				g.isLiteral = false;
+				g.result =sub.getTheExpression();
+				return;
+			}
+		}
+		
+		o.setTheExpression(g.result);
 		g.isLiteral = false;
 		g.result = o;
 	}
