@@ -1,6 +1,7 @@
 package logic.converter.test;
 
 import logic.converter.Converter;
+import logic.decoder.Tseitin2CNFDecoder;
 import logic.model.EF;
 import logic.model.Expression;
 import logic.printer.PrintVisitor;
@@ -12,7 +13,7 @@ public class ConverterTest {
 	
 	private void testConvert(Expression e){
 		System.out.println(PrintVisitor.expressionToString(e) + "\n=");
-		Expression decode = Converter.convert(e);
+		Expression decode = Tseitin2CNFDecoder.decode(e);
 		System.out.println(PrintVisitor.expressionToString(decode) +"\n\n");
 	}
 	

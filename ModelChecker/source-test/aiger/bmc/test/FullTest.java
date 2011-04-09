@@ -84,7 +84,7 @@ public class FullTest {
 	@Test
 	public void testExample1(){
 		File f = new File(benchmarks + File.separator + "texas.ifetch1^5.E.aig.aag");
-		testRunner(f, 20);
+		testRunner(f, 5);
 	}
 	
 	@Test

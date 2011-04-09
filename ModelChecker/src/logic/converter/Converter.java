@@ -67,17 +67,21 @@ public class Converter extends Visitor<ConverterContext> {
 		return true;
 	}
 	
+	
+	//pairs every two elements with each other.
 	private static List<Expression> pairList (List<Expression> l){
 		List<Expression> result = new ArrayList<Expression>();
 		int i;
 		for(i=0; i<l.size()/2; i++){
 			result.add(EF.createAnd(l.get(2*i), l.get((2*i)+1)));
 		}
-		if(l.size()%2==1){
+		if(l.size()%2==1){		//add if there is one left over
 			result.add(l.get(l.size()-1));
 		}
 		return result;
 	}
+	
+	//builds up the balanced tree
 	
 	private static Expression andList(List<Expression> l){
 		while(l.size()>1){
@@ -90,8 +94,8 @@ public class Converter extends Visitor<ConverterContext> {
 		ConverterContext context = new ConverterContext();
 		context.visitResult = null;
 		Converter con = new Converter(context);
-		con.visit(e);
-		context.equivs.add(context.visitResult);
+		con.visit(e);  
+		context.equivs.add(context.visitResult); 		// final fresh variable being appended
 //		if(!sanityCheck(context.equivs)){
 //			throw new Error ("Problem!");
 //		}
@@ -99,7 +103,7 @@ public class Converter extends Visitor<ConverterContext> {
 //		if(CycleChecker.checkForCycles(finalresult)){
 //			throw new Error ("Cycle");
 //		}
-		return andList(context.equivs);
+		return andList(context.equivs);  // will create a balanced tree of ands
 	}
 	
 	public Converter(ConverterContext g) {
@@ -140,6 +144,7 @@ public class Converter extends Visitor<ConverterContext> {
 			throw new Error("RHS Cycle");
 		if(o.getTheLHS() instanceof BinaryOp)
 			throw new Error("LHS Cycle");
+		
 		// {new va  <=> {this binary op}
 		BinaryOp equiv = new BinaryOp();
 		equiv.setTheBinaryOperator(BinaryOperator.EQUIV);

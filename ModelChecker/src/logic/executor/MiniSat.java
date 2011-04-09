@@ -24,17 +24,17 @@ public class MiniSat {
 	
    public static Expression convertExpression(Expression e)
    {
-	  // System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+//	   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	//   e = ImpRemover.removeImps(e);
 	 //  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   e = NotDistributor.distributeNots(e);
-	 //  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   e = Converter.convert(e);
-	 // System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   e = Tseitin2CNFDecoder.decode(e);
-	 //  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
-	   e = NotDistributor.distributeNots(e);
-	  // System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	 //  e = NotDistributor.distributeNots(e);
+	//   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   return e;
    }
    

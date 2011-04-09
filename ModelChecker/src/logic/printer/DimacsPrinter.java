@@ -1,6 +1,7 @@
 package logic.printer;
 
 import logic.model.*;
+
 import java.util.HashMap;
 
 public class DimacsPrinter extends Visitor<StringBuilder> {
@@ -23,6 +24,18 @@ public class DimacsPrinter extends Visitor<StringBuilder> {
 			this.nameCounter += 1;
 		}
 		g.append(this.nameMap.get(o.getTheName())+" ");
+	}
+	
+	@Override
+	protected void visitFalseLiteral(FalseLiteral o) {
+		// TODO Auto-generated method stub
+		super.visitFalseLiteral(o);
+	}
+	
+	@Override
+	protected void visitTrueLiteral(TrueLiteral o) {
+		// TODO Auto-generated method stub
+		super.visitTrueLiteral(o);
 	}
 	
 	protected void visitBinaryOp(BinaryOp o) {
