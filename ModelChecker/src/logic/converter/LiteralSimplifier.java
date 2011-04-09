@@ -7,6 +7,7 @@ import logic.model.Expression;
 import logic.model.FalseLiteral;
 import logic.model.TrueLiteral;
 import logic.model.UnaryOp;
+import logic.model.UnaryOperator;
 import logic.model.Variable;
 import logic.model.Visitor;
 
@@ -113,6 +114,21 @@ public class LiteralSimplifier extends Visitor<LiteralSimplifierContext>{
 	
 	@Override
 	protected void visitUnaryOp(UnaryOp o) {
+		visit(o.getTheExpression());
+		if (g.isLiteral && g.theLiteral)
+		{
+			g.result = EF.createFalseLiteral();
+			g.isLiteral = true;
+			g.theLiteral = false;
+			return;
+		}
+		else if(g.isLiteral && !g.theLiteral)
+		{
+			g.result = EF.createTrueLiteral();
+			g.isLiteral = true;
+			g.theLiteral = true;
+			return;
+		}
 		g.isLiteral = false;
 		g.result = o;
 	}
