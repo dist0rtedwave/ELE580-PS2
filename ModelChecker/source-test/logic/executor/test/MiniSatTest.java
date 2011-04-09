@@ -64,5 +64,9 @@ public class MiniSatTest {
 		MiniSat ms = new MiniSat();
 		ms.exec(Examples.getTotalExample7());
 	}
-	
+	@Test
+	public  void testPrintExample13() throws IOException{
+		MiniSat ms = new MiniSat();
+		ms.exec(Examples.getNotExample13());
+	}	
 }

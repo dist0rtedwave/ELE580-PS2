@@ -28,14 +28,12 @@ public class DimacsPrinter extends Visitor<StringBuilder> {
 	
 	@Override
 	protected void visitFalseLiteral(FalseLiteral o) {
-		// TODO Auto-generated method stub
-		super.visitFalseLiteral(o);
+		assert(false); //should never get an expression with literals left over (handled by LiteralSimplifier)
 	}
 	
 	@Override
 	protected void visitTrueLiteral(TrueLiteral o) {
-		// TODO Auto-generated method stub
-		super.visitTrueLiteral(o);
+		assert(false); //should never get an expression with literals left over (handled by LiteralSimplifier) 
 	}
 	
 	protected void visitBinaryOp(BinaryOp o) {
