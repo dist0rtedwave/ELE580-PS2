@@ -28,6 +28,15 @@ public class LiteralSimplifier extends Visitor<LiteralSimplifierContext>{
 
 	@Override
 	protected void visitBinaryOp(BinaryOp o) {
+
+		
+		if(g.exprCache.containsKey(o)){
+			g.isLiteral=g.exprCache.get(o).isLiteral;
+			g.theLiteral=g.exprCache.get(o).theLiteral;
+			g.result = g.exprCache.get(o).result;
+			return;
+		}	
+		
 		visit(o.getTheLHS());
 		boolean left = g.isLiteral;
 		Expression lhs = g.result;
@@ -39,15 +48,30 @@ public class LiteralSimplifier extends Visitor<LiteralSimplifierContext>{
 				g.result=EF.createFalseLiteral();
 				g.theLiteral=false;
 				g.isLiteral=true;
+				literalInfo li = new literalInfo();
+				li.isLiteral = g.isLiteral;
+				li.theLiteral = g.theLiteral;
+				li.result = g.result;
+				g.exprCache.put(o, li);
 				return;
 			}
 			if(left&& leftLiteral){
+				literalInfo li = new literalInfo();
+				li.isLiteral = g.isLiteral;
+				li.theLiteral = g.theLiteral;
+				li.result = g.result;
+				g.exprCache.put(o, li);
 				return;
 			}
 			if(right && g.theLiteral){
 				g.isLiteral=left;
 				g.theLiteral=leftLiteral;
 				g.result=lhs;
+				literalInfo li = new literalInfo();
+				li.isLiteral = g.isLiteral;
+				li.theLiteral = g.theLiteral;
+				li.result = g.result;
+				g.exprCache.put(o, li);
 				return;
 			}
 		}
@@ -56,15 +80,30 @@ public class LiteralSimplifier extends Visitor<LiteralSimplifierContext>{
 				g.result=EF.createTrueLiteral();
 				g.theLiteral=true;
 				g.isLiteral=true;
+				literalInfo li = new literalInfo();
+				li.isLiteral = g.isLiteral;
+				li.theLiteral = g.theLiteral;
+				li.result = g.result;
+				g.exprCache.put(o, li);
 				return;
 			}
 			if(left&& !leftLiteral){
+				literalInfo li = new literalInfo();
+				li.isLiteral = g.isLiteral;
+				li.theLiteral = g.theLiteral;
+				li.result = g.result;
+				g.exprCache.put(o, li);
 				return;
 			}
 			if(right && !g.theLiteral){
 				g.isLiteral=left;
 				g.theLiteral=leftLiteral;
 				g.result=lhs;
+				literalInfo li = new literalInfo();
+				li.isLiteral = g.isLiteral;
+				li.theLiteral = g.theLiteral;
+				li.result = g.result;
+				g.exprCache.put(o, li);
 				return;
 			}
 		}
@@ -88,7 +127,12 @@ public class LiteralSimplifier extends Visitor<LiteralSimplifierContext>{
 			g.result = o;
 			g.isLiteral = false;
 		}
-		
+		literalInfo li = new literalInfo();
+		li.isLiteral = g.isLiteral;
+		li.theLiteral = g.theLiteral;
+		li.result = g.result;
+		g.exprCache.put(o, li);
+		return;
 	}
 	
 	@Override
@@ -96,6 +140,7 @@ public class LiteralSimplifier extends Visitor<LiteralSimplifierContext>{
 		g.isLiteral = true;
 		g.theLiteral = false;
 		g.result = o;
+		
 	}
 	
 	@Override

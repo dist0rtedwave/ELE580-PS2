@@ -38,9 +38,9 @@ public class FullTest {
 		{
 			Proof p = new Proof();
 			p.load("/tmp/proof");
-			NamePrinterTraverser npt = new NamePrinterTraverser();
-			npt.setNameMap(ms.getNameMap());
-			p.traverse(npt);
+		//	NamePrinterTraverser npt = new NamePrinterTraverser();
+		//	npt.setNameMap(ms.getNameMap());
+		//	p.traverse(npt);
 		}
 	}
 	
@@ -65,7 +65,7 @@ public class FullTest {
 	@Test
 	public void testSmallestBenchmark(){
 		File f = new File(benchmarks + File.separator + "nusmv.syncarb5^2.B.aig.aag");
-		testRunner(f, 10);
+		testRunner(f, 100);
 	}
 	
 	@Test
@@ -83,7 +83,7 @@ public class FullTest {
 	@Test
 	public void testExample0(){
 		File f = new File(benchmarks + File.separator + "eijk.bs4863.S.aig.aag");
-		testRunner(f, 5);
+		testRunner(f, 3);
 	}
 	
 	@Test

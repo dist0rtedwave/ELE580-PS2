@@ -85,6 +85,7 @@ public class MiniSat {
        }
        this.trivial = false;
        this.writeCNF(e);
+       System.out.println("Running minisat!");
        String cmd = "../minisat/minisat /tmp/input.cnf -p /tmp/proof -r /tmp/result";
        //String removeDoubles = "../removeDoubles";
        runtime.exec("rm /tmp/proof");

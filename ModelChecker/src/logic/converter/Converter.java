@@ -127,11 +127,11 @@ public class Converter extends Visitor<ConverterContext> {
 	//assumes only and and or
 	protected void visitBinaryOp(BinaryOp o) {
 		
-	/*	if(g.exprCache.containsKey(o)){
+		if(g.exprCache.containsKey(o)){
 			g.visitResult=g.exprCache.get(o);
 			return;
 		}	
-*/		
+	
 		boolean topLevel = g.topLevel;
 		g.topLevel=false;
 		visit(o.getTheLHS());
