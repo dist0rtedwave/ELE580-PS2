@@ -47,7 +47,7 @@ public class FullTest {
 	@Test
 	public void testSimpleState(){ 
 		File f = new File(simpleExamples + File.separator + "simplestate.aig");
-		testRunner(f, 1);
+		testRunner(f, 0);
 	}
 	
 	@Test

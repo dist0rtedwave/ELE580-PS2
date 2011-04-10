@@ -19,6 +19,14 @@ public class Tseitin2CNFDecoder extends Visitor<TseitinDecoderContext>{
 	}
 
 	public static Expression decode(Expression o){
+		
+		if(o instanceof TrueLiteral)
+			return o;
+		if(o instanceof FalseLiteral)
+			return o;
+		if(o==null)
+			return o;
+		
 		if(o.getDescriptor()==UnaryOp.DESCRIPTOR)
 			return o;
 		if(o.getDescriptor()==Variable.DESCRIPTOR)

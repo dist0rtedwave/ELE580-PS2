@@ -70,6 +70,7 @@ public class MiniSat {
        Runtime runtime = Runtime.getRuntime();
        runtime.exec("rm /tmp/input.cnf");
        e = MiniSat.convertExpression(e);
+       
        if(e.getDescriptor() == TrueLiteral.DESCRIPTOR)
        {
     	  System.out.printf("Trivially true");
