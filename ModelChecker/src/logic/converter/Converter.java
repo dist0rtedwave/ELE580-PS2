@@ -54,7 +54,7 @@ public class Converter extends Visitor<ConverterContext> {
 	
 	private static boolean sanityCheck(List<Expression> l){
 		for(Expression e : l){
-			System.out.println(PrintVisitor.expressionToString(e));
+		//	System.out.println(PrintVisitor.expressionToString(e));
 			if(e instanceof BinaryOp){
 				if(!validEquiv((BinaryOp)e)){
 					return false;

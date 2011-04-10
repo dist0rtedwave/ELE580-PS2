@@ -21,7 +21,7 @@ public class FullTest {
 	private String simpleExamples = examplesDir + File.separator + "simpleExamples";
 	private String benchmarks = examplesDir + File.separator + "converted";
 	
-	private void testRunner(File file, int k){
+	public static void testRunner(File file, int k){
 		AigerFile aigerFile = AigerParser.parseFile(file);
 		Expression e = Unroller.unroll(aigerFile, k);
 		
@@ -45,9 +45,9 @@ public class FullTest {
 	}
 	
 	@Test
-	public void testSimpleState(){
+	public void testSimpleState(){ 
 		File f = new File(simpleExamples + File.separator + "simplestate.aig");
-		testRunner(f, 4);
+		testRunner(f, 1);
 	}
 	
 	@Test
@@ -65,15 +65,20 @@ public class FullTest {
 	@Test
 	public void testSmallestBenchmark(){
 		File f = new File(benchmarks + File.separator + "nusmv.syncarb5^2.B.aig.aag");
-		testRunner(f, 100);
+		testRunner(f, 10);
 	}
 	
 	@Test
 	public void testSimpleSafety(){
 		File f = new File(simpleExamples + File.separator + "simple-safety.aag");
-		testRunner(f, 10);
+		testRunner(f, 2);
 	}
 	
+	@Test
+	public void testAlwaysFalse(){
+		File f = new File(simpleExamples + File.separator + "alwaysFalse.aig");
+		testRunner(f, 2);
+	}
 	
 	@Test
 	public void testExample0(){

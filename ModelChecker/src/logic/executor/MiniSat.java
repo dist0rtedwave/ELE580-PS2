@@ -29,16 +29,21 @@ public class MiniSat {
    {
 //	   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	//   e = ImpRemover.removeImps(e);
-	 //  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	//   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   e = NotDistributor.distributeNots(e);
-	   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
-	   e = Converter.convert(e);
-	  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
-	   e = Tseitin2CNFDecoder.decode(e);
-	  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	   
+	//   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   e = LiteralSimplifier.simplifyLiterals(e);
-	   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
-	 //  e = NotDistributor.distributeNots(e);
+	   
+	//   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	   e = Converter.convert(e);
+	   
+	//   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	   e = Tseitin2CNFDecoder.decode(e);
+
+	//   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	   e = NotDistributor.distributeNots(e);
+    
 	//   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   return e;
    }
@@ -49,7 +54,7 @@ public class MiniSat {
 	    	FileOutputStream fs = new FileOutputStream("/tmp/input.cnf", false);
 	    	this.printer = new DimacsPrinter(new StringBuilder());
 	    	String out = this.printer.expressionToString(e); 
-	    	System.out.println(out);
+	    	//System.out.println(out);
 	    	fs.write(out.getBytes());
             fs.flush();
             fs.getFD().sync();
