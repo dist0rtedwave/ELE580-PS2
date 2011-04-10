@@ -24,6 +24,7 @@ import logic.printer.PrintVisitor;
 
 public class MiniSat {
    DimacsPrinter printer;
+   public boolean trivial = false;
 	
    public static Expression convertExpression(Expression e)
    {
@@ -72,13 +73,16 @@ public class MiniSat {
        if(e.getDescriptor() == TrueLiteral.DESCRIPTOR)
        {
     	  System.out.printf("Trivially true");
+    	  this.trivial = true;
     	  return true;
        }
        if(e.getDescriptor() == FalseLiteral.DESCRIPTOR)
        {
     	  System.out.printf("Trivially false");
+    	  this.trivial = true;
     	  return false;
        }
+       this.trivial = false;
        this.writeCNF(e);
        String cmd = "../minisat/minisat /tmp/input.cnf -p /tmp/proof -r /tmp/result";
        //String removeDoubles = "../removeDoubles";

@@ -34,7 +34,7 @@ public class FullTest {
 			e1.printStackTrace();
 		}
 		
-		if(!res)
+		if(!res && !ms.trivial)
 		{
 			Proof p = new Proof();
 			p.load("/tmp/proof");
