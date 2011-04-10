@@ -20,7 +20,7 @@ public class Unroller {
 	
 	public static logic.model.Expression unroll(AigerFile af, int k){
 		logic.model.Expression result=null;
-		for(int i=0; i<k; i++){
+		for(int i=0; i<=k; i++){
 //			System.out.println("k=" + i);
 			for(Expression e : af.getTheOutputs()){
 				logic.model.Expression lexp = CNFTranslator.CNFTranslate(e,i*af.getTheMaxVariable());
