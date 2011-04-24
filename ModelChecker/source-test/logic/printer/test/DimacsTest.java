@@ -1,6 +1,7 @@
 package logic.printer.test;
 
 import logic.converter.ImpRemover;
+import logic.converter.NotDistributor;
 import logic.decoder.Tseitin2CNFDecoder;
 import logic.executor.MiniSat;
 import logic.model.BinaryOp;
@@ -24,11 +25,12 @@ public class DimacsTest {
 	}
 
 
-	
+
 	@Test // tests for regular equiv decoding i.e. a<=>b)
 	public  void testEquivRemover1(){
 		BinaryOp op = Examples.getExample3(); 
 		ImpRemover.removeImps(op);
+		op = (BinaryOp) NotDistributor.distributeNots(op);
 		DimacsPrinter dp = new DimacsPrinter(new StringBuilder());
 		System.out.println(dp.expressionToString(op));
 	}

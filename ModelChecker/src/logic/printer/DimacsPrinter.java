@@ -4,7 +4,7 @@ import logic.model.*;
 
 import java.util.HashMap;
 
-public class DimacsPrinter extends Visitor<StringBuilder> {
+public class DimacsPrinter extends ClauseVisitor<StringBuilder> {
 	protected HashMap<String, Integer> nameMap;
 	protected int nameCounter;
 	protected int andCounter;
@@ -17,7 +17,16 @@ public class DimacsPrinter extends Visitor<StringBuilder> {
 		this.andCounter = 0;
 	}
 	
-	protected void visitVariable(Variable o) {
+	@Override
+    public void addNegativeLiteral(Variable v)
+	{
+    	g.append("-");
+    	this.addPositiveLiteral(v);
+	}
+    
+	@Override
+    public void addPositiveLiteral(Variable o)
+	{
 		if (!this.nameMap.containsKey(o.getTheName()))
 		{
 			this.nameMap.put(o.getTheName(), new Integer(this.nameCounter));
@@ -27,43 +36,20 @@ public class DimacsPrinter extends Visitor<StringBuilder> {
 	}
 	
 	@Override
-	protected void visitFalseLiteral(FalseLiteral o) {
-		assert(false); //should never get an expression with literals left over (handled by LiteralSimplifier)
-	}
-	
-	@Override
-	protected void visitTrueLiteral(TrueLiteral o) {
-		assert(false); //should never get an expression with literals left over (handled by LiteralSimplifier) 
-	}
-	
-	protected void visitBinaryOp(BinaryOp o) {
-		visit(o.getTheLHS());
-		if(o.getTheBinaryOperator() == BinaryOperator.AND)
-		{
-			g.append("0 \n");
-			this.andCounter += 1;
-		}
-		visit(o.getTheRHS());
-	}
-	
-	protected void visitUnaryOp(UnaryOp o){
-		if(o.getTheOperator()==UnaryOperator.NOT)
-		{
-			g.append("-");
-		}
-		visit(o.getTheExpression());
-	}
-
-	public String expressionToString(Expression e){		
-		this.visit(e);
+    public void endClause()
+	{
+		this.andCounter += 1;
 		g.append("0 \n");
+	}
+	
+	public String expressionToString(Expression e){		
+		this.visitFull(e);
 		
-		return "c "+PrintVisitor.expressionToString(e)+"\n"+"p cnf "+ (this.nameCounter-1) +" "+ (this.andCounter+1)+"\n"+g.toString();
+		return "c "+PrintVisitor.expressionToString(e)+"\n"+"p cnf "+ (this.nameCounter-1) +" "+ (this.andCounter)+"\n"+g.toString();
 	}
 	
 	public HashMap<String, Integer> getNameMap()
 	{
 		return this.nameMap;
 	}
-
 }
