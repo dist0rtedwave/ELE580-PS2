@@ -10,6 +10,10 @@ public class Literal {
 	  assert(val.value < ((Integer.MAX_VALUE/2)-1));
 	  this.store = (val.value+val.value) + (true == sgn?1:0);
 	}
+
+    public Literal(int variableNo, Boolean isNegative){
+  	  this.store = (variableNo+variableNo) + (true == isNegative?1:0);
+    }
 	
     public Literal(int idx){
     	this.store = idx;

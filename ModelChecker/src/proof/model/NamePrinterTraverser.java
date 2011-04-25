@@ -4,25 +4,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.Set;
+import logic.printer.*;
 
 public class NamePrinterTraverser extends IdentifierPrinterTraverser {
-	HashMap<Integer, String> lookupMap;
+	NameMap nameMap;
 	
-	public void setNameMap(HashMap<String, Integer> nameMap)
+	public void setNameMap(NameMap nameMap)
 	{
-		this.lookupMap = new HashMap<Integer, String>();
-		for(Entry<String, Integer> entry: nameMap.entrySet())
-		{
-			//System.out.print(entry.getKey());
-			//System.out.print(entry.getValue());
-			lookupMap.put(entry.getValue()-1, entry.getKey());
-		}
-		
+		this.nameMap = nameMap;		
 	}
 	
 	String getName(int var_no)
 	{
-		return lookupMap.get(var_no); 
+		return this.nameMap.getVarName(var_no); 
 	}
 	
 	String getLiteralName(Literal lit)
@@ -35,7 +30,7 @@ public class NamePrinterTraverser extends IdentifierPrinterTraverser {
 	}
 	
 	@Override
-	void printLiterals(ArrayList<Literal> literals)
+	void printLiterals(Set<Literal> literals)
 	{
 		if (literals == null)
 		{

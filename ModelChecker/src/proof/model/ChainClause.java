@@ -3,11 +3,12 @@ package proof.model;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 public class ChainClause extends Clause {
-	ArrayList<Clause> clauses;
-	ArrayList<Variable> pivots;
-	ArrayList<Literal> resolvents = null;
+	public ArrayList<Clause> clauses;
+	public ArrayList<Variable> pivots;
+	Set<Literal> resolvents = null;
 	
 	public ChainClause() {
 		this.clauses = new ArrayList<Clause>();
@@ -25,7 +26,7 @@ public class ChainClause extends Clause {
 		Iterator<Clause> it_clause= this.clauses.iterator(); 
 		Iterator<Variable> it_pivots= this.pivots.iterator();
 		
-		ArrayList<Literal> literals = it_clause.next().getLiterals();
+		Set<Literal> literals = it_clause.next().getLiterals();
 		while(it_clause.hasNext())
 		{
 			literals = this.resolveLiterals(literals, it_clause.next().getLiterals(), it_pivots.next());
@@ -40,7 +41,7 @@ public class ChainClause extends Clause {
 		return true;
 	}
 	
-	public ArrayList<Literal> resolveLiterals(ArrayList <Literal> right, ArrayList<Literal> left, Variable pivot)
+	public Set<Literal> resolveLiterals(Set <Literal> right, Set <Literal> left, Variable pivot)
 	{
 		Literal pos = new Literal(pivot, true);
 		Literal neg = new Literal(pivot, false);
@@ -57,12 +58,11 @@ public class ChainClause extends Clause {
 		set.remove(pos);
 		set.remove(neg);
 		
-		ArrayList<Literal> ret = new ArrayList<Literal>(set);
-		return ret;
+		return set;
 	}
 	
 	@Override
-	public ArrayList<Literal> getLiterals()
+	public Set<Literal> getLiterals()
 	{
 		if(this.resolvents == null)
 		{
@@ -80,7 +80,7 @@ public class ChainClause extends Clause {
 		Iterator<Variable> it_pivots= this.pivots.iterator();
 		Iterator<Literal> it_literal;
 		
-		ArrayList<Literal> literals = it_clause.next().getLiterals();
+		Set<Literal> literals = it_clause.next().getLiterals();
 		while(it_clause.hasNext())
 		{
 			System.out.print("Right: ");
@@ -98,7 +98,7 @@ public class ChainClause extends Clause {
 		System.out.println("\nEnd of Chain Clause");
 	}
 	
-	void traverse(ProofTraverser r)
+	public void traverse(ProofTraverser r)
 	{
 		r.chain(this);
 	}

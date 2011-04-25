@@ -1,13 +1,15 @@
 package proof.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 public class RootClause extends Clause {
-	ArrayList<Literal> literals;
+	HashSet<Literal> literals;
 	
 	public RootClause() {
-		this.literals = new ArrayList<Literal>();
+		this.literals = new HashSet<Literal>();
 	}
 	
 	public void addLiteral(Literal l)
@@ -16,7 +18,7 @@ public class RootClause extends Clause {
 	}
 	
 	@Override
-	public ArrayList<Literal> getLiterals()
+	public Set<Literal> getLiterals()
 	{
 		return this.literals;
 	}
@@ -32,9 +34,22 @@ public class RootClause extends Clause {
 		System.out.print("\n");
 	}
 	
-	void traverse(ProofTraverser r)
+	public void traverse(ProofTraverser r)
 	{
 		r.root(this);
 	}
+	
+    @Override public boolean equals(Object other) {
+        boolean result = false;
+        if (other instanceof RootClause) {
+            RootClause that = (RootClause) other;
+            result = this.literals.equals(that.literals);
+        }
+        return result;
+    }
+
+    @Override public int hashCode() {
+        return this.literals.hashCode();
+    }
 
 }

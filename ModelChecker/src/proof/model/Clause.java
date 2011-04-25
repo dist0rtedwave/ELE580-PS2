@@ -1,9 +1,10 @@
 package proof.model;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 abstract public class Clause {
    abstract void print();
-   abstract ArrayList<Literal> getLiterals();
-   abstract void traverse(ProofTraverser r);
+   abstract Set<Literal> getLiterals();
+   abstract public void traverse(ProofTraverser r);
 }

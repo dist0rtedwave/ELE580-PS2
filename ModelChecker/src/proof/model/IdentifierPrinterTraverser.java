@@ -2,10 +2,11 @@ package proof.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Set;
 
 public class IdentifierPrinterTraverser extends ProofTraverser{	
 	
-	void printLiterals(ArrayList<Literal> literals)
+	void printLiterals(Set <Literal> literals)
 	{
 		if(literals.size()==0)
 		{
@@ -21,13 +22,13 @@ public class IdentifierPrinterTraverser extends ProofTraverser{
 		System.out.print(var.toString());
 	}
 		
-	void chain(ChainClause clause)
+	public void chain(ChainClause clause)
 	{
 		System.out.println("Start of Chain Clause");
 		Iterator<Clause> it_clause= clause.clauses.iterator(); 
 		Iterator<Variable> it_pivots= clause.pivots.iterator();
 		
-		ArrayList<Literal> literals = it_clause.next().getLiterals();
+		Set<Literal> literals = it_clause.next().getLiterals();
 		while(it_clause.hasNext())
 		{
 			System.out.print("Right: ");
@@ -44,7 +45,7 @@ public class IdentifierPrinterTraverser extends ProofTraverser{
 	}
 	
 	
-	void root(RootClause clause)
+	public void root(RootClause clause)
 	{
 		System.out.print("Root: ");
 		printLiterals(clause.getLiterals());

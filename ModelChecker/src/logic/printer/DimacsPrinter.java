@@ -5,15 +5,14 @@ import logic.model.*;
 import java.util.HashMap;
 
 public class DimacsPrinter extends ClauseVisitor<StringBuilder> {
-	protected HashMap<String, Integer> nameMap;
-	protected int nameCounter;
+	//nameMap is 0 indexed
+	protected NameMap nameMap;
 	protected int andCounter;
 	
 
 	public DimacsPrinter(StringBuilder g) {
 		super(g);
-		this.nameMap = new HashMap<String, Integer>();
-		this.nameCounter = 1;
+		this.nameMap = new NameMap();
 		this.andCounter = 0;
 	}
 	
@@ -27,12 +26,8 @@ public class DimacsPrinter extends ClauseVisitor<StringBuilder> {
 	@Override
     public void addPositiveLiteral(Variable o)
 	{
-		if (!this.nameMap.containsKey(o.getTheName()))
-		{
-			this.nameMap.put(o.getTheName(), new Integer(this.nameCounter));
-			this.nameCounter += 1;
-		}
-		g.append(this.nameMap.get(o.getTheName())+" ");
+		int num = this.nameMap.getDimacsIndex(o.getTheName());
+		g.append(num+" ");
 	}
 	
 	@Override
@@ -45,10 +40,10 @@ public class DimacsPrinter extends ClauseVisitor<StringBuilder> {
 	public String expressionToString(Expression e){		
 		this.visitFull(e);
 		
-		return "c "+PrintVisitor.expressionToString(e)+"\n"+"p cnf "+ (this.nameCounter-1) +" "+ (this.andCounter)+"\n"+g.toString();
+		return "c "+PrintVisitor.expressionToString(e)+"\n"+"p cnf "+ (this.nameMap.getSize()) +" "+ (this.andCounter)+"\n"+g.toString();
 	}
 	
-	public HashMap<String, Integer> getNameMap()
+	public NameMap getNameMap()
 	{
 		return this.nameMap;
 	}

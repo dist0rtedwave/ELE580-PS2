@@ -18,5 +18,18 @@ public class Variable {
 	{
 		return this.value;
 	}
+	
+    @Override public boolean equals(Object other) {
+        boolean result = false;
+        if (other instanceof Variable) {
+            Variable that = (Variable) other;
+            result = (this.value == that.value);
+        }
+        return result;
+    }
+
+    @Override public int hashCode() {
+        return (this.value);
+    }
 
 }
