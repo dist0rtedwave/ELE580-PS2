@@ -25,6 +25,7 @@ import logic.printer.PrintVisitor;
 public class MiniSat {
    DimacsPrinter printer;
    public boolean trivial = false;
+   public Expression theExpression;
 	
    public static Expression convertExpression(Expression e)
    {
@@ -52,6 +53,7 @@ public class MiniSat {
    public void writeCNF(Expression e)
    {
 	    try {
+	    	this.theExpression = e;
 	    	FileOutputStream fs = new FileOutputStream("/tmp/input.cnf", false);
 	    	this.printer = new DimacsPrinter(new StringBuilder());
 	    	String out = this.printer.expressionToString(e); 
@@ -112,7 +114,7 @@ public class MiniSat {
        return true;
    }
    
-	public HashMap<String, Integer> getNameMap()
+	public logic.printer.NameMap getNameMap()
 	{
 		return this.printer.getNameMap();
 	}
