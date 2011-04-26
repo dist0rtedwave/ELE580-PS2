@@ -34,6 +34,11 @@ public class RootClause extends Clause {
 		System.out.print("\n");
 	}
 	
+	public String toString()
+	{
+		return this.literals.toString();
+	}
+	
 	public void traverse(ProofTraverser r)
 	{
 		r.root(this);

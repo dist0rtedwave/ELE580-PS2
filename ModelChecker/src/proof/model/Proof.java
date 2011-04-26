@@ -106,6 +106,11 @@ public class Proof {
 		}
 	}
 	
+	public Clause getLastClause()
+	{
+		return this.clauses.get(this.clauses.size()-1);
+	}
+	
 static long getLong(FileInputStream in) throws IOException	
 {
 	long ret = Proof.getLongInt(in);

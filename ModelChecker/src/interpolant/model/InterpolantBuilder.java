@@ -10,12 +10,25 @@ import proof.model.*;
 import proof.model.Variable;
 import logic.model.*;
 import logic.printer.NameMap;
+import logic.printer.PrintVisitor;
 
 public class InterpolantBuilder extends ProofTraverser{
 	NameMap nameMap;
 	Set<RootClause> clausesA;
 	Set<proof.model.Variable> variablesB;
 	HashMap<proof.model.Clause, Expression> partialInterpolants;
+	
+	InterpolantBuilder()
+	{
+	   this.partialInterpolants = new HashMap<proof.model.Clause, Expression>();
+	}
+	
+	public Expression getInterpolant(Proof p)
+	{
+		p.traverse(this);
+		Expression last = this.partialInterpolants.get(p.getLastClause());
+		return last;
+	}
 	
 	public void setNameMap(NameMap nameMap)
 	{
@@ -55,6 +68,7 @@ public class InterpolantBuilder extends ProofTraverser{
 			current = this.getPartialInterpolant(current, it_pivots.next(), it_clause.next());
 		}
 		
+		//System.out.println("In Chain: "+PrintVisitor.expressionToString(current));
 		this.partialInterpolants.put(clause, current);
 	}
 	
@@ -99,7 +113,7 @@ public class InterpolantBuilder extends ProofTraverser{
 	{
 		if(this.partialInterpolants.containsKey(clause))
 			return;
-		
+				
 	   Expression e;
 	   if(this.clausesA.contains(clause))
 	   {
@@ -149,6 +163,7 @@ public class InterpolantBuilder extends ProofTraverser{
 	   {
 		   e = new TrueLiteral();
 	   }
+	   //System.out.println("In Root: "+PrintVisitor.expressionToString(e));
 	   this.partialInterpolants.put(clause, e);
 	}
 	

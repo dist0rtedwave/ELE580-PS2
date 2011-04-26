@@ -37,10 +37,10 @@ public class MiniSat {
 	//   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   e = LiteralSimplifier.simplifyLiterals(e);
 	   
-	//   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	  // System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   e = Converter.convert(e);
 	   
-	//   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+	 //  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   e = Tseitin2CNFDecoder.decode(e);
 
 	//   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
@@ -57,11 +57,12 @@ public class MiniSat {
 	    	FileOutputStream fs = new FileOutputStream("/tmp/input.cnf", false);
 	    	this.printer = new DimacsPrinter(new StringBuilder());
 	    	String out = this.printer.expressionToString(e); 
-	    	//System.out.println(out);
+	    	//System.out.println("Writing:"+out);
 	    	fs.write(out.getBytes());
             fs.flush();
             fs.getFD().sync();
             fs.close();
+            //System.exit(0);
 		} catch (IOException exc) {
 			exc.printStackTrace();
 		}
@@ -69,9 +70,27 @@ public class MiniSat {
    
    public Boolean exec(Expression e) throws IOException
    {
-       Runtime runtime = Runtime.getRuntime();
-       runtime.exec("rm /tmp/input.cnf");
-       e = MiniSat.convertExpression(e);
+	   e = MiniSat.convertExpression(e);
+	   return this.execPrepared(e);
+	   
+   }
+   
+   public void execWaitFor(String cmd) throws IOException
+   {
+	   Process process;
+	   process = Runtime.getRuntime().exec(cmd);
+	   try {
+		process.waitFor();
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}  
+   }
+   
+   
+   public Boolean execPrepared(Expression e) throws IOException
+   {
+       this.execWaitFor("rm /tmp/input.cnf");
        
        if(e.getDescriptor() == TrueLiteral.DESCRIPTOR)
        {
@@ -90,14 +109,22 @@ public class MiniSat {
        System.out.println("Running minisat!");
        String cmd = "../minisat/minisat /tmp/input.cnf -p /tmp/proof -r /tmp/result";
        //String removeDoubles = "../removeDoubles";
-       runtime.exec("rm /tmp/proof");
+       this.execWaitFor("rm /tmp/proof");
        //runtime.exec(removeDoubles); //doesn't work because not synchronous.
-       Process process = runtime.exec(cmd);
+       
+       Process process;
+       process = Runtime.getRuntime().exec(cmd);
        InputStream is = process.getInputStream();
        InputStreamReader isr = new InputStreamReader(is);
        BufferedReader br = new BufferedReader(isr);
        String line;
 
+       try {
+		process.waitFor();
+	   } catch (InterruptedException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	   }
        System.out.printf("Output of running %s is:\n",cmd 
            );
 
