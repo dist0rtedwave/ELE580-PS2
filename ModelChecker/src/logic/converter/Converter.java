@@ -90,9 +90,10 @@ public class Converter extends Visitor<ConverterContext> {
 		return l.get(0);
 	}
 	
-	public static Expression convert(Expression e){
+	public static ConverterContext convert(Expression e, int freshBase){
 		ConverterContext context = new ConverterContext();
 		context.visitResult = null;
+		context.setFreshNumber(freshBase);
 		Converter con = new Converter(context);
 		con.visit(e);  
 		context.equivs.add(context.visitResult); 		// final fresh variable being appended
@@ -103,7 +104,8 @@ public class Converter extends Visitor<ConverterContext> {
 //		if(CycleChecker.checkForCycles(finalresult)){
 //			throw new Error ("Cycle");
 //		}
-		return andList(context.equivs);  // will create a balanced tree of ands
+		context.visitResult = andList(context.equivs);  // will create a balanced tree of ands
+		return context;
 	}
 	
 	public Converter(ConverterContext g) {

@@ -1,5 +1,6 @@
 package interpolant.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,6 +9,7 @@ import java.util.Set;
 
 import proof.model.*;
 import proof.model.Variable;
+import logic.executor.MiniSat;
 import logic.model.*;
 import logic.printer.NameMap;
 import logic.printer.PrintVisitor;
@@ -17,6 +19,54 @@ public class InterpolantBuilder extends ProofTraverser{
 	Set<RootClause> clausesA;
 	Set<proof.model.Variable> variablesB;
 	HashMap<proof.model.Clause, Expression> partialInterpolants;
+	
+	
+	public static Expression buildInterpolant(Expression A, Expression B) {
+
+		Expression Full = EF.createAnd(A, B);
+
+		System.out.println(PrintVisitor.expressionToString(A));
+		System.out.println(PrintVisitor.expressionToString(B));
+
+		// System.out.println(PrintVisitor.expressionToString(Full));
+
+		MiniSat ms = new MiniSat();
+		boolean res = true;
+		try {
+			res = ms.execPrepared(Full);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		// System.out.println(PrintVisitor.expressionToString(Full));
+		if (!res) {
+			Proof p = new Proof();
+			p.load("/tmp/proof");
+			// NamePrinterTraverser npt = new NamePrinterTraverser();
+			// npt.setNameMap(ms.getNameMap());
+			// p.traverse(npt);
+
+			// System.out.println(PrintVisitor.expressionToString(Full));
+			// System.out.println(PrintVisitor.expressionToString(A));
+			// System.out.println(PrintVisitor.expressionToString(B));
+
+			InterpolantBuilder ib = new InterpolantBuilder();
+			ib.setNameMap(ms.getNameMap());
+			ib.setAExpression(A);
+			ib.setBExpression(B);
+			Expression interp = ib.getInterpolant(p);
+			System.out.println(PrintVisitor.expressionToString(interp));
+
+			// Expression last = ib.partialInterpolants.get(p.getLastClause());
+			// System.out.println(PrintVisitor.expressionToString(last));
+
+		}
+		else
+		{
+			return null;
+		}
+		return Full;
+
+	}
 	
 	InterpolantBuilder()
 	{
@@ -156,7 +206,7 @@ public class InterpolantBuilder extends ProofTraverser{
 		   }
 		   else
 		   {
-			   e = new TrueLiteral();
+			   e = new FalseLiteral();
 		   }
 	   }
 	   else

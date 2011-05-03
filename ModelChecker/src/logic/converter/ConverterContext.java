@@ -8,11 +8,21 @@ import logic.model.Expression;
 
 public class ConverterContext {
 	protected Expression visitResult;
-    private int freshNumber =0;
+    public Expression getVisitResult() {
+		return visitResult;
+	}
+
+	public void setVisitResult(Expression visitResult) {
+		this.visitResult = visitResult;
+	}
+
+	private int freshNumber =0;
     boolean topLevel=true;
     protected List<Expression> equivs =  new ArrayList<Expression>();
     
-    protected HashMap<Expression, Expression> exprCache = new HashMap<Expression, Expression>();
+
+
+	protected HashMap<Expression, Expression> exprCache = new HashMap<Expression, Expression>();
    
 
 	public void setFreshNumber(int freshNumber) {

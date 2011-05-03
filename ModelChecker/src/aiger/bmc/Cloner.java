@@ -19,7 +19,9 @@ public class Cloner extends Visitor<ClonerContext>{
 			g.setResult(g.getTheCopies().get(o));
 		}
 		else{
-			Variable v = new Variable(o.getTheVariableName() + g.offset);
+//			Variable v = new Variable(o.getTheVariableName() + g.offset);
+			Variable v = new Variable(o.getTheVariableName());
+
 			g.setResult(v);
 			g.getTheCopies().put(o, v);
 		}
@@ -57,9 +59,9 @@ public class Cloner extends Visitor<ClonerContext>{
 		g.setResult(o.getTheCurrentState());
 	}
 	
-	public static void clone(Latch l, int k, int maxVar){
+	public static void clone(Latch l){
 		ClonerContext g = new ClonerContext();
-		g.offset=k*maxVar;
+//		g.offset=k*maxVar;
 		Cloner c = new Cloner(g);
 		c.visit(l.getTheNextState());
 		l.setTheInterimState(g.getResult());

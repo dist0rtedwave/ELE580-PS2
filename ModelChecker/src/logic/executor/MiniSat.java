@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 
 import logic.converter.Converter;
+import logic.converter.ConverterContext;
 import logic.converter.ImpRemover;
 import logic.converter.LiteralSimplifier;
 import logic.converter.NotDistributor;
@@ -27,6 +28,8 @@ public class MiniSat {
    public boolean trivial = false;
    public Expression theExpression;
 	
+   private static int freshBase = 0;
+   
    public static Expression convertExpression(Expression e)
    {
 //	   System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
@@ -38,7 +41,9 @@ public class MiniSat {
 	   e = LiteralSimplifier.simplifyLiterals(e);
 	   
 	  // System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
-	   e = Converter.convert(e);
+	   ConverterContext conv = Converter.convert(e, freshBase);
+	   freshBase = conv.getFreshNumber();
+	   e = conv.getVisitResult();
 	   
 	 //  System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
 	   e = Tseitin2CNFDecoder.decode(e);

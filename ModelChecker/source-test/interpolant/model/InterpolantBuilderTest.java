@@ -24,10 +24,13 @@ public class InterpolantBuilderTest {
 		Expression A = EF.createAnd(EF.createNot("a1"), EF.createOr("a1", EF.createNot("a2")));
 		Expression B = EF.createAnd(EF.createOr(EF.createNot("a1"), "a2"), "a1");
 		
-		//A = MiniSat.convertExpression(A);
-		//B = MiniSat.convertExpression(B);
+		A = MiniSat.convertExpression(A);
+		B = MiniSat.convertExpression(B);
 		
 		Expression Full = EF.createAnd(A, B);
+		
+		System.out.println(PrintVisitor.expressionToString(A));	
+		System.out.println(PrintVisitor.expressionToString(B));	
 		
 		//System.out.println(PrintVisitor.expressionToString(Full));	
 		

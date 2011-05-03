@@ -1,7 +1,14 @@
 package aiger.bmc;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
+
+import util.Pair;
+
 import logic.converter.NotDistributor;
 import logic.model.EF;
+import logic.printer.PrintVisitor;
 import aiger.model.AigerFile;
 import aiger.model.Expression;
 import aiger.model.Latch;
@@ -9,16 +16,18 @@ import aiger.model.Latch;
 public class Unroller {
 // iterates over latches, calls clone on each. When done updates state
 // then calls class to create CNF
-	public static void unrollOnce(AigerFile af, int k){
+	public static void unrollOnce(AigerFile af){
 		for(Latch l : af.getTheLatches()){
-			Cloner.clone(l, k, af.getTheMaxVariable());
+			Cloner.clone(l);
 		}
 		for(Latch l : af.getTheLatches()){
 			l.setTheCurrentState(l.getTheInterimState());
 		}
 	}
 	
+	
 	public static logic.model.Expression unroll(AigerFile af, int k){
+		
 		logic.model.Expression result=null;
 		for(int i=0; i<=k; i++){
 //			System.out.println("k=" + i);
@@ -32,9 +41,9 @@ public class Unroller {
 				else{
 					result=EF.createOr(result, lexp);
 				}
-//				System.out.println(PrintVisitor.expressionToString(lexp) + "\n\n");
+				System.out.println(PrintVisitor.expressionToString(lexp) + "\n\n");
 			}
-			unrollOnce(af,i);
+			unrollOnce(af);
 		}
 //        FileOutputStream out; // declare a file output object
 //        PrintStream p = null; // declare a print stream object
