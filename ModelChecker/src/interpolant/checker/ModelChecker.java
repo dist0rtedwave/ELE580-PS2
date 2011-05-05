@@ -10,6 +10,7 @@ import logic.converter.NotDistributor;
 import logic.executor.MiniSat;
 import logic.model.EF;
 import logic.model.Expression;
+import logic.model.FalseLiteral;
 import logic.printer.PrintVisitor;
 import proof.model.Proof;
 import aiger.bmc.CNFTranslator;
@@ -72,6 +73,12 @@ public class ModelChecker {
 				System.out.println("Not OK!");
 				break;
 			}
+			if(interpolant.getDescriptor() == FalseLiteral.DESCRIPTOR)
+			{
+				System.out.println("Trivial!");
+				break;
+			}
+			
 			
 			Expression a0_OR_interp = EF.createOr(DeepCopy.deepCopy(a0), interpolant);
 			Expression a0_OR_interp_AND_a1 = EF.createAnd(DeepCopy.deepCopy(a1), a0_OR_interp);

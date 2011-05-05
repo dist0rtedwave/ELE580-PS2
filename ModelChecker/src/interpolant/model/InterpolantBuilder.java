@@ -39,6 +39,10 @@ public class InterpolantBuilder extends ProofTraverser{
 		}
 		// System.out.println(PrintVisitor.expressionToString(Full));
 		if (!res) {
+			if(ms.trivial)
+			{
+				return new FalseLiteral();
+			}
 			Proof p = new Proof();
 			p.load("/tmp/proof");
 			// NamePrinterTraverser npt = new NamePrinterTraverser();
