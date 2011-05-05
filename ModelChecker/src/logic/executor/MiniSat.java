@@ -96,6 +96,13 @@ public class MiniSat {
    public Boolean execPrepared(Expression e) throws IOException
    {
        this.execWaitFor("rm /tmp/input.cnf");
+
+       System.out.println("starting simplifier");
+       System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
+
+       e = LiteralSimplifier.simplifyLiterals(e);
+
+       System.out.println(PrintVisitor.expressionToString(e) +"\n\n");
        
        if(e.getDescriptor() == TrueLiteral.DESCRIPTOR)
        {
