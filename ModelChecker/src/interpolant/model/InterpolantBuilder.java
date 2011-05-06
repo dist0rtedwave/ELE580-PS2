@@ -1,5 +1,7 @@
 package interpolant.model;
 
+import interpolant.checker.TimeShifter;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,8 +27,8 @@ public class InterpolantBuilder extends ProofTraverser{
 
 		Expression Full = EF.createAnd(A, B);
 
-		System.out.println(PrintVisitor.expressionToString(A));
-		System.out.println(PrintVisitor.expressionToString(B));
+	//	System.out.println(PrintVisitor.expressionToString(A));
+//		System.out.println(PrintVisitor.expressionToString(B));
 
 		// System.out.println(PrintVisitor.expressionToString(Full));
 
@@ -58,7 +60,7 @@ public class InterpolantBuilder extends ProofTraverser{
 			ib.setAExpression(A);
 			ib.setBExpression(B);
 			Expression interp = ib.getInterpolant(p);
-			System.out.println(PrintVisitor.expressionToString(interp));
+//			System.out.println(PrintVisitor.expressionToString(interp));
 
 			// Expression last = ib.partialInterpolants.get(p.getLastClause());
 			// System.out.println(PrintVisitor.expressionToString(last));

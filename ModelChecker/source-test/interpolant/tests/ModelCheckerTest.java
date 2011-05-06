@@ -71,7 +71,7 @@ public class ModelCheckerTest {
 	@Test
 	public void testExample1(){
 		File f = new File(benchmarks + File.separator + "texas.ifetch1^5.E.aig.aag");
-		testModelChecker(f);
+		testModelChecker(f); 
 	}
 	
 	@Test

@@ -73,7 +73,7 @@ public class FullTest {
 	@Test
 	public void testSimpleSafety(){
 		File f = new File(simpleExamples + File.separator + "simple-safety.aag");
-		testRunner(f, 1);
+		testRunner(f, 0);
 	}
 	
 	@Test

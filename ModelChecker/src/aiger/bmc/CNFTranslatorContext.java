@@ -12,4 +12,7 @@ public class CNFTranslatorContext {
 	protected boolean inLatch=false;
 	protected Map<aiger.model.Expression, Expression> latchExMap = new HashMap<aiger.model.Expression, Expression>();
 	protected int offset=0;
+	protected int currentTime= 0;
+	protected boolean latchesAsVariables = false;
+	
 }

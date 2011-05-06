@@ -1,5 +1,7 @@
 package aiger.bmc;
 
+import interpolant.checker.ModelChecker;
+
 import java.util.Map;
 
 import logic.model.EF;
@@ -16,6 +18,16 @@ public class CNFTranslator extends Visitor<CNFTranslatorContext> {
 
 	public CNFTranslator(CNFTranslatorContext g) {
 		super(g);
+	}
+	
+	public static Expression convertToLogicExpressionWithLatchesAsVariables(aiger.model.Expression e, int currentTime)
+	{
+		CNFTranslatorContext g = new CNFTranslatorContext();
+		g.latchesAsVariables = true;
+		g.currentTime = currentTime;
+		CNFTranslator v = new CNFTranslator(g);
+		v.visit(e);
+		return g.result;
 	}
 	
 	private Map<aiger.model.Expression, Expression> selectMap(){
@@ -76,9 +88,22 @@ public class CNFTranslator extends Visitor<CNFTranslatorContext> {
 	
 	@Override
 	protected void visitLatch(Latch o) {
-		g.inLatch=true;
-		visit(o.getTheCurrentState());
-		g.inLatch=false;
+		if(g.latchesAsVariables)
+		{	
+			if(g.latchExMap.containsKey(o)){  //doesnt matter which map we use
+				g.result=g.latchExMap.get(o);
+			}
+			visit(o.getTheCurrentState());
+			Expression var = EF.createVariable("_l"+ModelChecker.id2latch.get(o)+"_"+g.currentTime);
+			g.result = var;
+			g.latchExMap.put(o, g.result);
+		}
+		else
+		{
+			g.inLatch=true;
+			visit(o.getTheCurrentState());
+			g.inLatch=false;
+		}
 	}
 	
 	@Override
@@ -108,6 +133,14 @@ public class CNFTranslator extends Visitor<CNFTranslatorContext> {
 	public static Expression CNFTranslate(aiger.model.Expression e, int offset){
 		CNFTranslatorContext g = new CNFTranslatorContext();
 		g.offset=offset;
+		CNFTranslator v = new CNFTranslator(g);
+		v.visit(e);
+		return g.result;
+	}
+	
+	public static Expression CNFTranslate(aiger.model.Expression e){
+		CNFTranslatorContext g = new CNFTranslatorContext();
+		g.inLatch = true;
 		CNFTranslator v = new CNFTranslator(g);
 		v.visit(e);
 		return g.result;

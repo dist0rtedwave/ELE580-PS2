@@ -1,14 +1,13 @@
 package logic.converter;
 
+import java.util.HashMap;
+
 import logic.model.Expression;
 
 public class ImpContext {
-	private Expression child=null;
-	public Expression getChild() {
-		return child;
-	}
-	public void setChild(Expression child) {
-		this.child = child;
-	}
+	protected Expression theResult=null;
+	protected HashMap<Expression, Expression> exprCache = new HashMap<Expression, Expression>();
+	
+
 
 }
